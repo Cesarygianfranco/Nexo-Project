@@ -4,14 +4,12 @@ import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import "./App.css";
 import HeaderSearch from "./components/HeaderSearch";
-import { ArticlesCardsGrid } from "./components/ArticlesCardsGrid";
 
 function App() {
 	return (
 		<>
 			<MantineProvider>
 				<HeaderSearch />
-				<ArticlesCardsGrid />
 
 				<Routes>
 					<Route path={"/"} element={<HomePage />} />
