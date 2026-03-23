@@ -38,10 +38,16 @@
   }
 }
 
+@media (min-width: 768px) {
+  .burgerCustom {
+    display: none !important;
+  }
+}
 
-@media (max-width: 48em) {
+@media (max-width: 767px) {
+
+
   .link {
-   
     color: var(--mantine-color-blue-9) !important;
     padding: 16px; 
     font-size: var(--mantine-font-size-lg);

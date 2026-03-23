@@ -4,6 +4,7 @@ import { useDisclosure } from '@mantine/hooks';
 import NexoLogo from './NexoLogo'
 import { Link } from 'react-router-dom'; 
 import classes from './HeaderSearch.module.css';
+import OpenForm from './OpenForm';
 
 const links = [
   { link: '/', label: 'Home' },
@@ -34,9 +35,12 @@ function HeaderSearch() {
             opened={opened}
             onClick={toggle}
             size="sm"
-            hiddenFrom="sm"
+            hiddenFrom="md"
+            color='white'
             aria-label="Toggle navigation"
+            className={classes.burgerCustom}
           />
+          <OpenForm />
           <NexoLogo />
         </Group>
 
@@ -49,7 +53,7 @@ function HeaderSearch() {
             placeholder="Search"
             leftSection={<IconSearch size={16} stroke={1.5} />}
             data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
-            visibleFrom="xs"
+            visibleFrom="md"
           />
         </Group>
       </div>
