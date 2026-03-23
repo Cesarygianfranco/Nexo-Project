@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Drawer, TextInput, Textarea, Button, Stack, Text, Title, Select, Group } from '@mantine/core';
 import { IconDeviceLaptop, IconDeviceMobile, IconTools, IconBox } from '@tabler/icons-react';
 import classes from './CategorySidebar.module.css';
+import axios from 'axios';
+import { BASE_URL } from '../../service/api';
 
 export function CategorySidebar({ opened, close }) {
   // Estado único para el formulario
@@ -25,16 +27,14 @@ export function CategorySidebar({ opened, close }) {
     }
 
     console.log('Enviando datos controlados:', formData);
-    
-    // Resetear y cerrar
-    setFormData({
-      name: '',
-      description: '',
-      icon: 'IconBox',
-      lastActivity: new Date().toISOString().split('T')[0],
-    });
-    setError('');
-    close();
+    axios.post(`${BASE_URL}/categories.json`, formData)
+    .then((response) => {
+      console.log(response);
+      
+    })
+    .catch(err => {"failed to created", console.log(err);
+    })
+  
   };
 
   return (

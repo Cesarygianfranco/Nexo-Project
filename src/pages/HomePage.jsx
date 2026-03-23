@@ -2,16 +2,14 @@ import { Flex } from "@mantine/core";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CategoryCard from "../components/CategoryCard";
+import { BASE_URL } from "../../service/api";
 
 const HomePage = () => {
-	const baseURL =
-		"https://nexo-882cd-default-rtdb.europe-west1.firebasedatabase.app/categories.json";
-
 	const [categoriesArr, setCategoriesArr] = useState([]);
 
 	useEffect(() => {
 		axios
-			.get(`${baseURL}`)
+			.get(`${BASE_URL}/categories.json`)
 			.then((response) => {
 				let infoObj = response.data;
 				//Conver the Object to Array
