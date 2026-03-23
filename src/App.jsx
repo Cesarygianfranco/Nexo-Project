@@ -3,22 +3,22 @@ import HomePage from "./pages/HomePage";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import "./App.css";
-import HeaderSearch from "./components/HeaderSearch"
+import HeaderSearch from "./components/HeaderSearch";
+import { ArticlesCardsGrid } from "./components/ArticlesCardsGrid";
 
 function App() {
-  return (
-    <>
-      <MantineProvider>
-        
-        <HeaderSearch />
+	return (
+		<>
+			<MantineProvider>
+				<HeaderSearch />
+				<ArticlesCardsGrid />
 
-        <Routes>
-          <Route path={"/"} element={<HomePage />} />
-        </Routes>
-
-      </MantineProvider>
-    </>
-  );
+				<Routes>
+					<Route path={"/"} element={<HomePage />} />
+				</Routes>
+			</MantineProvider>
+		</>
+	);
 }
 
 export default App;
