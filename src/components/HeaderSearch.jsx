@@ -1,28 +1,29 @@
 import { IconSearch } from '@tabler/icons-react';
-import { Autocomplete, Burger, Group } from '@mantine/core';
+import { Autocomplete, Burger, Group, Drawer, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
+import NexoLogo from './NexoLogo'
+import { Link } from 'react-router-dom'; 
 import classes from './HeaderSearch.module.css';
 
 const links = [
-  { link: '/about', label: 'Features' },
-  { link: '/pricing', label: 'Pricing' },
-  { link: '/learn', label: 'Learn' },
+  { link: '/', label: 'Home' },
+  { link: '/valuation', label: 'Valuation' },
+  { link: '/bin', label: 'Bin' },
   { link: '/community', label: 'Community' },
 ];
 
 function HeaderSearch() {
-  const [opened, { toggle }] = useDisclosure(false);
+  const [opened, { toggle, close }] = useDisclosure(false);
 
   const items = links.map((link) => (
-    <a
+    <Link
       key={link.label}
-      href={link.link}
+      to={link.link}
       className={classes.link}
-      onClick={(event) => event.preventDefault()}
+      onClick={close} 
     >
       {link.label}
-    </a>
+    </Link>
   ));
 
   return (
@@ -36,7 +37,7 @@ function HeaderSearch() {
             hiddenFrom="sm"
             aria-label="Toggle navigation"
           />
-          <MantineLogo size={28} />
+          <NexoLogo />
         </Group>
 
         <Group>
@@ -52,8 +53,23 @@ function HeaderSearch() {
           />
         </Group>
       </div>
+
+      {/* Menú lateral para móviles */}
+      <Drawer
+        opened={opened}
+        onClose={close}
+        size="md"
+        padding="md"
+        title="Navegation"
+        hiddenFrom="sm"
+        zIndex={1000}
+      >
+        <Stack gap={10}>
+          {items}
+        </Stack>
+      </Drawer>
     </header>
   );
 }
 
-export default HeaderSearch
+export default HeaderSearch;
