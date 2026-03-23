@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CategoryCard from "../components/CategoryCard";
 import { BASE_URL } from "../../service/api";
+import OpenForm from '../components/OpenForm';
 
 const HomePage = () => {
 	const [categoriesArr, setCategoriesArr] = useState([]);
 
-	useEffect(() => {
+	function getData () {
 		axios
 			.get(`${BASE_URL}/categories.json`)
 			.then((response) => {
@@ -25,9 +26,17 @@ const HomePage = () => {
 					error,
 				);
 			});
+	}
+
+	useEffect(() => {
+		getData()
 	}, []);
 
+	
+
 	return (
+		<>
+		 <OpenForm onCreate={getData}/>
 		<Flex
 			mih={70}
 			gap="xl"
@@ -40,6 +49,7 @@ const HomePage = () => {
 				return <CategoryCard categoryObj={category} key={category.id} />;
 			})}
 		</Flex>
+		</>
 	);
 };
 

@@ -5,7 +5,7 @@ import classes from './CategorySidebar.module.css';
 import axios from 'axios';
 import { BASE_URL } from '../../service/api';
 
-export function CategorySidebar({ opened, close }) {
+export function CategorySidebar({ opened, close, onCreate }) {
   // Estado único para el formulario
   const [formData, setFormData] = useState({
     name: '',
@@ -30,7 +30,7 @@ export function CategorySidebar({ opened, close }) {
     axios.post(`${BASE_URL}/categories.json`, formData)
     .then((response) => {
       console.log(response);
-      
+      onCreate()
     })
     .catch(err => {"failed to created", console.log(err);
     })
@@ -97,7 +97,7 @@ export function CategorySidebar({ opened, close }) {
             <Button variant="subtle" color="gray" onClick={close} size="md">
               Cancel
             </Button>
-            <Button type="submit" className={classes.submitBtn} size="md">
+            <Button onClick={close} type="submit" className={classes.submitBtn} size="md">
               Create category
             </Button>
           </Group>

@@ -1,19 +1,32 @@
-import { Button } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { CategorySidebar } from './CategorySidebar';
+import { Button } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { CategorySidebar } from "./CategorySidebar";
+import { IconPlus } from "@tabler/icons-react";
+import "./OpenForm.css";
 
-function OpenForm() {
+function OpenForm(props) {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
-      <Button onClick={open} color="blue.9" m="xl">
-        + Add
-      </Button>
+      <div className="add-button">
+        <Button
+          onClick={open}
+          variant="subtle"
+          color="blue.9"
+          leftSection={<IconPlus size={18} />} 
+        >
+          Add Category
+        </Button>
 
-      <CategorySidebar opened={opened} close={close} />
+        <CategorySidebar
+          onCreate={props.onCreate}
+          opened={opened}
+          close={close}
+        />
+      </div>
     </>
   );
 }
 
-export default OpenForm
+export default OpenForm;

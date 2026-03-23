@@ -4,7 +4,6 @@ import { useDisclosure } from '@mantine/hooks';
 import NexoLogo from './NexoLogo'
 import { Link } from 'react-router-dom'; 
 import classes from './HeaderSearch.module.css';
-import OpenForm from './OpenForm';
 
 const links = [
   { link: '/', label: 'Home' },
@@ -40,7 +39,6 @@ function HeaderSearch() {
             aria-label="Toggle navigation"
             className={classes.burgerCustom}
           />
-          <OpenForm />
           <NexoLogo />
         </Group>
 
