@@ -1,6 +1,34 @@
-import { Card, Image, Text, Badge, Button, Group, Flex } from "@mantine/core";
+import { Flex } from "@mantine/core";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import CategoryCard from "../components/CategoryCard";
 
 const HomePage = () => {
+	const baseURL =
+		"https://nexo-882cd-default-rtdb.europe-west1.firebasedatabase.app/categories.json";
+
+	const [categoriesArr, setCategoriesArr] = useState([]);
+
+	useEffect(() => {
+		axios
+			.get(`${baseURL}`)
+			.then((response) => {
+				let infoObj = response.data;
+				//Conver the Object to Array
+				const arr = Object.keys(infoObj).map((id) => ({
+					id,
+					...infoObj[id],
+				}));
+				setCategoriesArr(arr);
+			})
+			.catch((error) => {
+				console.log(
+					"Ops! we have problem to getting the list of categories",
+					error,
+				);
+			});
+	}, []);
+
 	return (
 		<Flex
 			mih={70}
@@ -10,236 +38,9 @@ const HomePage = () => {
 			direction="row"
 			wrap="wrap"
 		>
-			<Card shadow="sm" padding="lg" radius="md" withBorder maw={300}>
-				<Card.Section>
-					<Image
-						src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-						height={160}
-						alt="Norway"
-					/>
-				</Card.Section>
-
-				<Group justify="space-between" mt="md" mb="xs">
-					<Text fw={500}>Norway Fjord Adventures</Text>
-					<Badge color="pink">On Sale</Badge>
-				</Group>
-
-				<Text size="sm" c="dimmed">
-					With Fjord Tours you can explore more of the magical fjord landscapes
-					with tours and activities on and around the fjords of Norway
-				</Text>
-
-				<Button color="blue" fullWidth mt="md" radius="md">
-					Book classic tour now
-				</Button>
-			</Card>
-			<Card shadow="sm" padding="lg" radius="md" withBorder maw={300}>
-				<Card.Section>
-					<Image
-						src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-						height={160}
-						alt="Norway"
-					/>
-				</Card.Section>
-
-				<Group justify="space-between" mt="md" mb="xs">
-					<Text fw={500}>Norway Fjord Adventures</Text>
-					<Badge color="pink">On Sale</Badge>
-				</Group>
-
-				<Text size="sm" c="dimmed">
-					With Fjord Tours you can explore more of the magical fjord landscapes
-					with tours and activities on and around the fjords of Norway
-				</Text>
-
-				<Button color="blue" fullWidth mt="md" radius="md">
-					Book classic tour now
-				</Button>
-			</Card>
-			<Card shadow="sm" padding="lg" radius="md" withBorder maw={300}>
-				<Card.Section>
-					<Image
-						src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-						height={160}
-						alt="Norway"
-					/>
-				</Card.Section>
-
-				<Group justify="space-between" mt="md" mb="xs">
-					<Text fw={500}>Norway Fjord Adventures</Text>
-					<Badge color="pink">On Sale</Badge>
-				</Group>
-
-				<Text size="sm" c="dimmed">
-					With Fjord Tours you can explore more of the magical fjord landscapes
-					with tours and activities on and around the fjords of Norway
-				</Text>
-
-				<Button color="blue" fullWidth mt="md" radius="md">
-					Book classic tour now
-				</Button>
-			</Card>
-			<Card shadow="sm" padding="lg" radius="md" withBorder maw={300}>
-				<Card.Section>
-					<Image
-						src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-						height={160}
-						alt="Norway"
-					/>
-				</Card.Section>
-
-				<Group justify="space-between" mt="md" mb="xs">
-					<Text fw={500}>Norway Fjord Adventures</Text>
-					<Badge color="pink">On Sale</Badge>
-				</Group>
-
-				<Text size="sm" c="dimmed">
-					With Fjord Tours you can explore more of the magical fjord landscapes
-					with tours and activities on and around the fjords of Norway
-				</Text>
-
-				<Button color="blue" fullWidth mt="md" radius="md">
-					Book classic tour now
-				</Button>
-			</Card>
-			<Card shadow="sm" padding="lg" radius="md" withBorder maw={300}>
-				<Card.Section>
-					<Image
-						src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-						height={160}
-						alt="Norway"
-					/>
-				</Card.Section>
-
-				<Group justify="space-between" mt="md" mb="xs">
-					<Text fw={500}>Norway Fjord Adventures</Text>
-					<Badge color="pink">On Sale</Badge>
-				</Group>
-
-				<Text size="sm" c="dimmed">
-					With Fjord Tours you can explore more of the magical fjord landscapes
-					with tours and activities on and around the fjords of Norway
-				</Text>
-
-				<Button color="blue" fullWidth mt="md" radius="md">
-					Book classic tour now
-				</Button>
-			</Card>
-			<Card shadow="sm" padding="lg" radius="md" withBorder maw={300}>
-				<Card.Section>
-					<Image
-						src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-						height={160}
-						alt="Norway"
-					/>
-				</Card.Section>
-
-				<Group justify="space-between" mt="md" mb="xs">
-					<Text fw={500}>Norway Fjord Adventures</Text>
-					<Badge color="pink">On Sale</Badge>
-				</Group>
-
-				<Text size="sm" c="dimmed">
-					With Fjord Tours you can explore more of the magical fjord landscapes
-					with tours and activities on and around the fjords of Norway
-				</Text>
-
-				<Button color="blue" fullWidth mt="md" radius="md">
-					Book classic tour now
-				</Button>
-			</Card>
-			<Card shadow="sm" padding="lg" radius="md" withBorder maw={300}>
-				<Card.Section>
-					<Image
-						src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-						height={160}
-						alt="Norway"
-					/>
-				</Card.Section>
-
-				<Group justify="space-between" mt="md" mb="xs">
-					<Text fw={500}>Norway Fjord Adventures</Text>
-					<Badge color="pink">On Sale</Badge>
-				</Group>
-
-				<Text size="sm" c="dimmed">
-					With Fjord Tours you can explore more of the magical fjord landscapes
-					with tours and activities on and around the fjords of Norway
-				</Text>
-
-				<Button color="blue" fullWidth mt="md" radius="md">
-					Book classic tour now
-				</Button>
-			</Card>
-			<Card shadow="sm" padding="lg" radius="md" withBorder maw={300}>
-				<Card.Section>
-					<Image
-						src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-						height={160}
-						alt="Norway"
-					/>
-				</Card.Section>
-
-				<Group justify="space-between" mt="md" mb="xs">
-					<Text fw={500}>Norway Fjord Adventures</Text>
-					<Badge color="pink">On Sale</Badge>
-				</Group>
-
-				<Text size="sm" c="dimmed">
-					With Fjord Tours you can explore more of the magical fjord landscapes
-					with tours and activities on and around the fjords of Norway
-				</Text>
-
-				<Button color="blue" fullWidth mt="md" radius="md">
-					Book classic tour now
-				</Button>
-			</Card>
-			<Card shadow="sm" padding="lg" radius="md" withBorder maw={300}>
-				<Card.Section>
-					<Image
-						src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-						height={160}
-						alt="Norway"
-					/>
-				</Card.Section>
-
-				<Group justify="space-between" mt="md" mb="xs">
-					<Text fw={500}>Norway Fjord Adventures</Text>
-					<Badge color="pink">On Sale</Badge>
-				</Group>
-
-				<Text size="sm" c="dimmed">
-					With Fjord Tours you can explore more of the magical fjord landscapes
-					with tours and activities on and around the fjords of Norway
-				</Text>
-
-				<Button color="blue" fullWidth mt="md" radius="md">
-					Book classic tour now
-				</Button>
-			</Card>
-			<Card shadow="sm" padding="lg" radius="md" withBorder maw={300}>
-				<Card.Section>
-					<Image
-						src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-						height={160}
-						alt="Norway"
-					/>
-				</Card.Section>
-
-				<Group justify="space-between" mt="md" mb="xs">
-					<Text fw={500}>Norway Fjord Adventures</Text>
-					<Badge color="pink">On Sale</Badge>
-				</Group>
-
-				<Text size="sm" c="dimmed">
-					With Fjord Tours you can explore more of the magical fjord landscapes
-					with tours and activities on and around the fjords of Norway
-				</Text>
-
-				<Button color="blue" fullWidth mt="md" radius="md">
-					Book classic tour now
-				</Button>
-			</Card>
+			{categoriesArr.map((category) => {
+				return <CategoryCard categoryObj={category} key={category.id} />;
+			})}
 		</Flex>
 	);
 };
