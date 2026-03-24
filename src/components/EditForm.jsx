@@ -1,26 +1,47 @@
-import { useState, useEffect } from 'react';
-import { Drawer, TextInput, Textarea, Button, Stack, Text, Select, Group } from '@mantine/core';
-import classes from './CategorySidebar.module.css';
-import axios from 'axios';
-import { BASE_URL } from '../../service/api';
-
+import { useState, useEffect } from "react";
+import {
+  Drawer,
+  TextInput,
+  Textarea,
+  Button,
+  Stack,
+  Text,
+  Select,
+  Group,
+} from "@mantine/core";
+import classes from "./CategorySidebar.module.css";
+import axios from "axios";
+import { BASE_URL } from "../../service/api";
+import {
+  laptop,
+  discoduro,
+  MemoriaRam,
+  monitor,
+  mouse,
+  packsPC,
+  PC,
+  penDrives,
+  procesador,
+  tarjetaGrafica,
+  Teclado,
+} from "../assets";
 
 export function EditForm({ opened, close, onEdit, categoryData }) {
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    icon: 'IconBox',
+    name: "",
+    description: "",
+    icon: "IconBox",
+    lastActivity: new Date().toISOString().split("T")[0],
   });
 
-  const [error, setError] = useState('');
-
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (categoryData) {
       setFormData({
-        name: categoryData.name || '',
-        description: categoryData.description || '',
-        icon: categoryData.icon || 'IconBox',
+        name: categoryData.name || "",
+        description: categoryData.description || "",
+        icon: categoryData.icon || "IconBox",
       });
     }
   }, [categoryData]);
@@ -29,21 +50,22 @@ export function EditForm({ opened, close, onEdit, categoryData }) {
     event.preventDefault();
 
     if (formData.name.length < 3) {
-      setError('Name is too short');
+      setError("Name is too short");
       return;
     }
 
     const updatedCategory = {
       ...formData,
-      lastActivity: new Date().toISOString(),
+      lastActivity: new Date().toISOString().split("T")[0],
     };
 
-    axios.patch(`${BASE_URL}/categories/${categoryData.id}.json`, updatedCategory)
+    axios
+      .patch(`${BASE_URL}/categories/${categoryData.id}.json`, updatedCategory)
       .then(() => {
         onEdit(); // Refrescar lista en la HomePage
-        close();  // Cerrar el Drawer
+        close(); // Cerrar el Drawer
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("Error al editar:", err);
       });
   };
@@ -74,7 +96,7 @@ export function EditForm({ opened, close, onEdit, categoryData }) {
             error={error}
             onChange={(event) => {
               setFormData({ ...formData, name: event.currentTarget.value });
-              if (error) setError('');
+              if (error) setError("");
             }}
           />
 
@@ -85,7 +107,10 @@ export function EditForm({ opened, close, onEdit, categoryData }) {
             size="md"
             value={formData.description}
             onChange={(event) =>
-              setFormData({ ...formData, description: event.currentTarget.value })
+              setFormData({
+                ...formData,
+                description: event.currentTarget.value,
+              })
             }
           />
 
@@ -93,21 +118,41 @@ export function EditForm({ opened, close, onEdit, categoryData }) {
             label="Icon"
             placeholder="Selecciona un icono"
             data={[
-              { value: 'IconDeviceLaptop', label: 'Laptop' },
-              { value: 'IconDeviceMobile', label: 'Móvil' },
-              { value: 'IconTools', label: 'Herramientas' },
-              { value: 'IconBox', label: 'General' },
+              { value: laptop, label: "Laptop" },
+              { value: discoduro, label: "Disco Duro" },
+              { value: MemoriaRam, label: "Memoria RAM" },
+              { value: monitor, label: "Monitor" },
+              { value: mouse, label: "Mouse" },
+              { value: packsPC, label: "Ordenadores" },
+              { value: PC, label: "Torres" },
+              { value: penDrives, label: "PenDrives" },
+              { value: procesador, label: "Procesadores" },
+              {
+                value: tarjetaGrafica,
+                label: "Tarjetas Graficas",
+              },
+              {
+                value: Teclado,
+                label: "Teclado",
+              },
             ]}
             size="md"
             value={formData.icon}
-            onChange={(value) => setFormData({ ...formData, icon: value || 'IconBox' })}
+            onChange={(value) =>
+              setFormData({ ...formData, icon: value || "IconBox" })
+            }
           />
 
           <Group justify="flex-end" mt="xl">
             <Button variant="subtle" color="gray" onClick={close} size="md">
               Cancel
             </Button>
-            <Button type="submit" className={classes.submitBtn} size="md" color="yellow">
+            <Button
+              type="submit"
+              className={classes.submitBtn}
+              size="md"
+              color="yellow"
+            >
               Save Changes
             </Button>
           </Group>
