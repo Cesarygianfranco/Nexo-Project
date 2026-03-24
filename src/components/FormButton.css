@@ -1,17 +1,16 @@
 .add-button {
     position: absolute;
     top: 80px;
-    left: 1;
+    left: 0px;
 }
 .addButton {
-  /* Reseteo de estilos de botón por defecto */
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 8px 16px;
   display: flex;
   align-items: center;
-  gap: 8px; /* Espacio entre el icono (+) y el texto */
+  gap: 8px; 
   
   /* Tipografía Nexo */
   color: var(--mantine-color-blue-9);
@@ -19,30 +18,24 @@
   font-size: var(--mantine-font-size-md);
   font-weight: 600;
   border-radius: var(--mantine-radius-sm);
-  
-  /* Animación suave */
   transition: all 0.2s ease;
 }
 
 .addButton:hover {
-  /* Fondo azul muy sutil (equivalente a blue.0 de Mantine) */
   background-color: rgba(0, 32, 77, 0.05); 
-  /* Un ligero movimiento hacia arriba para dar feedback */
   transform: translateY(-1px);
 }
 
 .addButton:active {
-  /* Efecto de pulsado */
   transform: translateY(0);
   background-color: rgba(0, 32, 77, 0.1);
 }
 
-/* Si decides añadir un icono dentro del botón */
+
 .addButton svg {
   transition: transform 0.2s ease;
 }
 
 .addButton:hover svg {
-  /* El icono gira levemente o resalta al hacer hover */
   transform: scale(1.1);
 }
