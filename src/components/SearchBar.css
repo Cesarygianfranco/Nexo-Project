@@ -3,4 +3,10 @@
 	top: 76px;
 	left: 150px;
 	color: var(--mantine-color-blue-9);
+	border-bottom: 1px solid transparent;
+	transition: border-bottom 0.8s ease;
+}
+
+.searchbar-container:hover {
+	border-bottom: 1px solid #333;
 }
