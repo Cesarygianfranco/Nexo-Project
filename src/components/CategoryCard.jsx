@@ -22,7 +22,7 @@ const CategoryCard = (props) => {
           {props.categoryObj.description}
         </Text>
         <Group>
-          <Button color="yellow" variant="outline" mt="md" radius="md" w="45%">
+          <Button onClick={props.onEdit} color="yellow" variant="outline" mt="md" radius="md" w="45%">
             Edit
           </Button>
           <Button
