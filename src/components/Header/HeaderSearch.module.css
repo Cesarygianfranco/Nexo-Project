@@ -1,8 +1,8 @@
 .header {
   height: 80px;
   margin-bottom: 120px;
-  background-color: var(--mantine-color-blue-6);
-  border-bottom: 1px solid var(--mantine-color-blue-10);
+  background-color: var(--mantine-color-blue-9);
+  border-bottom: 1px solid var(--mantine-color-blue-9);
   padding-left: var(--mantine-spacing-md);
   padding-right: var(--mantine-spacing-md);
   box-shadow: var(--mantine-shadow-sm);
