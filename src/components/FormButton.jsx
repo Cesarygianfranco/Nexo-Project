@@ -2,9 +2,9 @@ import { Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { CategorySidebar } from "./CategorySidebar";
 import { IconPlus } from "@tabler/icons-react";
-import "./OpenForm.css";
+import "./FormButton.css";
 
-function OpenForm(props) {
+function FormButton(props) {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -29,4 +29,4 @@ function OpenForm(props) {
   );
 }
 
-export default OpenForm;
+export default FormButton;

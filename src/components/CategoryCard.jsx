@@ -24,7 +24,7 @@ const CategoryCard = (props) => {
 					<Button color="yellow" variant="outline" mt="md" radius="md" w="45%">
 						Edit
 					</Button>
-					<Button color="red" variant="outline" mt="md" radius="md" w="45%">
+					<Button onClick={() => props.onDelete(props.categoryObj.id)} color="red" variant="outline" mt="md" radius="md" w="45%">
 						Delete
 					</Button>
 				</Group>
