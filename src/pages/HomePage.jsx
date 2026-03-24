@@ -62,7 +62,7 @@ const HomePage = () => {
 				<Input
 					variant="unstyled"
 					size="md"
-					radius="xl"
+					radius="md"
 					placeholder="Search"
 					value={inputValue}
 					onChange={(e) => {
