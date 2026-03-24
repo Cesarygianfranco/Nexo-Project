@@ -9,7 +9,7 @@ import {
   Select,
   Group,
 } from "@mantine/core";
-import classes from "./CategorySidebar.module.css";
+import classes from "./CreateForm.module.css";
 import axios from "axios";
 import { BASE_URL } from "../../service/api";
 import {

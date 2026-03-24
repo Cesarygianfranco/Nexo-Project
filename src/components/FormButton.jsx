@@ -1,6 +1,6 @@
 import { Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { CategorySidebar } from "./CategorySidebar";
+import { CreateForm } from "./CreateForm";
 import { IconPlus } from "@tabler/icons-react";
 import "./FormButton.css";
 
@@ -19,7 +19,7 @@ function FormButton(props) {
           Add Category
         </Button>
 
-        <CategorySidebar
+        <CreateForm
           onCreate={props.onCreate}
           opened={opened}
           close={close}
