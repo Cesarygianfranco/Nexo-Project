@@ -15,6 +15,7 @@ import {
 } from "@mantine/core";
 import { IconPackage, IconTrash, IconEdit } from "@tabler/icons-react";
 import axios from "axios";
+import ProductForm from "../components/ProductForms/ProductForm";
 
 const ProductsList = () => {
   const { categoryId } = useParams();
@@ -71,13 +72,18 @@ const ProductsList = () => {
       )}
 
       {!isLoading && products.length === 0 && (
+		<>
+		<ProductForm onCreated={getData} categoryId={categoryId}/>
         <Flex direction="column" align="center" mt="xl">
           <Title order={3}>No products found!</Title>
           <Text c="dimmed">There are no products in this category yet.</Text>
         </Flex>
+		</>
       )}
 
       {!isLoading && products.length > 0 && (
+		<>
+		<ProductForm onCreated={getData} categoryId={categoryId}/>
         <Flex
           mih={70}
           gap="xl"
@@ -138,6 +144,7 @@ const ProductsList = () => {
             </Card>
           ))}
         </Flex>
+		</>
       )}
     </>
   );
