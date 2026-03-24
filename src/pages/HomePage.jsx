@@ -1,97 +1,112 @@
-import { Flex, Loader, Title, Text } from "@mantine/core";
+import { Flex, Loader, Title, Text, Input } from "@mantine/core";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CategoryCard from "../components/CategoryCard";
 import { BASE_URL } from "../../service/api";
-import FormButton from '../components/FormButton';
+import FormButton from "../components/FormButton";
+import "../components/SearchBar.css";
 
 const HomePage = () => {
-    const [categoriesArr, setCategoriesArr] = useState([]);
-    const [isLoading, setIsLoading] = useState(true); 
+	const [categoriesArr, setCategoriesArr] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const [inputValue, setInputValue] = useState("");
 
-    function getData() {
-        setIsLoading(true);
-        axios
-            .get(`${BASE_URL}/categories.json`)
-            .then((response) => {
-                const infoObj = response.data;
-                
-                
-                if (infoObj) {
-                    const arr = Object.keys(infoObj).map((id) => ({
-                        id,
-                        ...infoObj[id],
-                    }));
-                    setCategoriesArr(arr);
-                } else {
-                    setCategoriesArr([]); 
-                }
-            })
-            .catch((error) => {
-                console.error("Error al obtener categorías:", error);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-    }
+	function getData() {
+		setIsLoading(true);
+		axios
+			.get(`${BASE_URL}/categories.json`)
+			.then((response) => {
+				const infoObj = response.data;
 
-    function deleteCategory(categoryId) {
-        axios.delete(`${BASE_URL}/categories/${categoryId}.json`)
-            .then(() => {
-                getData(); 
-            })
-            .catch(err => {
-                console.error("Error al eliminar:", err);
-            });
-    }
+				if (infoObj) {
+					const arr = Object.keys(infoObj).map((id) => ({
+						id,
+						...infoObj[id],
+					}));
+					setCategoriesArr(arr);
+				} else {
+					setCategoriesArr([]);
+				}
+			})
+			.catch((error) => {
+				console.error("Error al obtener categorías:", error);
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
+	}
 
-    useEffect(() => {
-		getData()
+	function deleteCategory(categoryId) {
+		axios
+			.delete(`${BASE_URL}/categories/${categoryId}.json`)
+			.then(() => {
+				getData();
+			})
+			.catch((err) => {
+				console.error("Error al eliminar:", err);
+			});
+	}
+
+	useEffect(() => {
+		getData();
 	}, []);
 
-    return (
+	const filteredArr = categoriesArr.filter((element) => {
+		return element.name.toLowerCase().includes(inputValue.toLowerCase());
+	});
+
+	return (
 		<>
-       
-            <FormButton onCreate={getData} />
+			<FormButton onCreate={getData} />
+			<div className="searchbar-container">
+				<Input
+					variant="unstyled"
+					size="md"
+					radius="xl"
+					placeholder="Search"
+					value={inputValue}
+					onChange={(e) => {
+						setInputValue(e.target.value);
+					}}
+				/>
+			</div>
 
-            
-            {isLoading && (
-                <Flex justify="center" mt="xl">
-                    <Loader size="lg" />
-                </Flex>
-            )}
+			{isLoading && (
+				<Flex justify="center" mt="xl">
+					<Loader size="lg" />
+				</Flex>
+			)}
 
-            
-            {!isLoading && categoriesArr.length === 0 && (
-                <Flex direction="column" align="center" mt="xl">
-                    <Title order={3}>¡No hay categorías aún!</Title>
-                    <Text c="dimmed">Haz clic en el botón superior para crear tu primera categoría.</Text>
-                </Flex>
-            )}
+			{!isLoading && categoriesArr.length === 0 && (
+				<Flex direction="column" align="center" mt="xl">
+					<Title order={3}>¡No hay categorías aún!</Title>
+					<Text c="dimmed">
+						Haz clic en el botón superior para crear tu primera categoría.
+					</Text>
+				</Flex>
+			)}
 
-           
-            {!isLoading && categoriesArr.length > 0 && (
-                <Flex
-                    mih={70}
-                    gap="xl"
-                    justify="center"
-                    align="flex-start"
-                    direction="row"
-                    wrap="wrap"
-                    mt="xl"
-                >
-                    {categoriesArr.map((category) => (
-                        <CategoryCard 
-                            onDelete={() => deleteCategory(category.id)} 
-                            categoryObj={category} 
-                            key={category.id} 
-                        />
-                    ))}
-                </Flex>
-            )}
-        
+			{!isLoading && categoriesArr.length > 0 && (
+				<Flex
+					mih={70}
+					gap="xl"
+					justify="center"
+					align="flex-start"
+					direction="row"
+					wrap="wrap"
+					mt="xl"
+				>
+					{filteredArr.map((category) => (
+						<CategoryCard
+							onDelete={() => deleteCategory(category.id)}
+							categoryObj={category}
+							key={category.id}
+						/>
+					))}
+				</Flex>
+			)}
 		</>
-    );
+	);
 };
 
 export default HomePage;
