@@ -38,6 +38,7 @@ export function EditForm({ opened, close, onEdit, categoryData }) {
 
   useEffect(() => {
     if (categoryData) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       setFormData({
         name: categoryData.name || "",
         description: categoryData.description || "",

@@ -16,6 +16,7 @@ const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   function getData() {
+	// eslint-disable-next-line react-hooks/exhaustive-deps
     setIsLoading(true);
     axios
       .get(`${BASE_URL}/categories.json`)
