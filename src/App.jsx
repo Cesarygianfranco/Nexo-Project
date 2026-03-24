@@ -4,7 +4,7 @@ import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import "./App.css";
 import HeaderSearch from "./components/Header/HeaderSearch";
-import ProductList from "./pages/ProductList";
+import ProductsList from "./pages/ProductList";
 
 function App() {
 	return (
@@ -13,8 +13,8 @@ function App() {
 				<HeaderSearch />
 
 				<Routes>
-					<Route path={"/"} element={<HomePage />} />
-					<Route path={"/products/:categoryId "} element={<ProductList />} />
+					<Route path="/" element={<HomePage />} />
+					<Route path="/products/:categoryId" element={<ProductsList />} />
 				</Routes>
 			</MantineProvider>
 		</>
