@@ -1,7 +1,7 @@
 import { IconSearch } from "@tabler/icons-react";
 import { Autocomplete, Burger, Group, Drawer, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import NexoLogo from "./NexoLogo";
+import NexoLogo from "../NexoLogo";
 import { Link } from "react-router-dom";
 import classes from "./HeaderSearch.module.css";
 

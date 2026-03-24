@@ -13,7 +13,7 @@ import {
 
 import classes from "./CreateForm.module.css";
 import axios from "axios";
-import { BASE_URL } from "../../service/api";
+import { BASE_URL } from "../../../service/api";
 
 import {
   laptop,
@@ -27,7 +27,7 @@ import {
   procesador,
   tarjetaGrafica,
   Teclado,
-} from "../assets";
+} from "../../assets";
 
 export function CreateForm({ opened, close, onCreate }) {
   // Estado único para el formulario

@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CategoryCard from "../components/CategoryCard";
 import { BASE_URL } from "../../service/api";
-import FormButton from "../components/FormButton";
+import FormButton from "../components/Forms/FormButton";
 import "../components/SearchBar.css";
-import { EditForm } from "../components/EditForm";
+import { EditForm } from "../components/Forms/EditForm";
 
 const HomePage = () => {
   const [categoriesArr, setCategoriesArr] = useState([]);

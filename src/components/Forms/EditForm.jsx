@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import classes from "./CreateForm.module.css";
 import axios from "axios";
-import { BASE_URL } from "../../service/api";
+import { BASE_URL } from "../../../service/api";
 import {
   laptop,
   discoduro,
@@ -24,7 +24,7 @@ import {
   procesador,
   tarjetaGrafica,
   Teclado,
-} from "../assets";
+} from "../../assets";
 
 export function EditForm({ opened, close, onEdit, categoryData }) {
   const [formData, setFormData] = useState({
