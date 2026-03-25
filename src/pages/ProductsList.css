@@ -1,0 +1,12 @@
+.searchbar-container-products {
+	position: fixed;
+	top: 76px;
+	left: 320px;
+	color: var(--mantine-color-blue-9);
+	border-bottom: 1px solid transparent;
+	transition: border-bottom 0.8s ease;
+}
+
+.searchbar-container-products:hover {
+	border-bottom: 1px solid #333;
+}

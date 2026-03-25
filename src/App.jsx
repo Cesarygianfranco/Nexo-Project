@@ -4,7 +4,7 @@ import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import "./App.css";
 import HeaderSearch from "./components/Header/HeaderSearch";
-import ProductsList from "./pages/ProductList";
+import ProductsList from "./pages/ProductsList";
 
 function App() {
 	return (
