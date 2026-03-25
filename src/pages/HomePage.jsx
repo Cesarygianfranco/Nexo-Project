@@ -1,4 +1,14 @@
-import { Flex, Loader, Title, Text, Input } from "@mantine/core";
+import {
+	Flex,
+	Loader,
+	Title,
+	Text,
+	Input,
+	Modal,
+	useModalsStack,
+	Group,
+	Button,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -14,6 +24,7 @@ const HomePage = () => {
 	const [inputValue, setInputValue] = useState("");
 	const [opened, { open, close }] = useDisclosure(false);
 	const [selectedCategory, setSelectedCategory] = useState(null);
+	const stack = useModalsStack(["delete-page"]);
 
 	function getData() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,6 +52,11 @@ const HomePage = () => {
 			});
 	}
 
+	const openDeleteModal = (category) => {
+		setSelectedCategory(category);
+		stack.open("delete-page");
+	};
+
 	function deleteCategory(categoryId) {
 		axios
 			.delete(`${BASE_URL}/categories/${categoryId}.json`)
@@ -67,6 +83,26 @@ const HomePage = () => {
 
 	return (
 		<>
+			<Modal {...stack.register("delete-page")} title="Delete this page?">
+				Are you sure you want to delete this page? This action cannot be undone.
+				<Group mt="lg" justify="flex-end">
+					<Button onClick={stack.closeAll} variant="default">
+						Cancel
+					</Button>
+					{/* Nota: Aquí llamas a 'confirm-action', asegúrate de tener ese modal registrado también */}
+					<Button
+						onClick={() => {
+							deleteCategory(selectedCategory);
+							stack.closeAll();
+						}}
+						color="red"
+					>
+						Delete
+					</Button>
+				</Group>
+			</Modal>
+
+			{/* <--- Cerrado correctamente aquí */}
 			<FormButton onCreate={getData} />
 			<div className="searchbar-container">
 				<Input
@@ -80,13 +116,11 @@ const HomePage = () => {
 					}}
 				/>
 			</div>
-
 			{isLoading && (
 				<Flex justify="center" mt="xl">
 					<Loader size="lg" />
 				</Flex>
 			)}
-
 			{!isLoading && categoriesArr.length === 0 && (
 				<Flex direction="column" align="center" mt="xl">
 					<Title order={3}>No categories yet!</Title>
@@ -95,7 +129,6 @@ const HomePage = () => {
 					</Text>
 				</Flex>
 			)}
-
 			{!isLoading && categoriesArr.length > 0 && (
 				<>
 					<Flex
@@ -109,7 +142,7 @@ const HomePage = () => {
 					>
 						{filteredArr.map((category) => (
 							<CategoryCard
-								onDelete={() => deleteCategory(category.id)}
+								onDelete={() => openDeleteModal(category.id)}
 								onEdit={() => handleEditClick(category)}
 								categoryObj={category}
 								key={category.id}
