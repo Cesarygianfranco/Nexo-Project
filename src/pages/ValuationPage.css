@@ -1,0 +1,26 @@
+.invoice-section {
+  border-left: 5px solid #228be6;
+  transition: all 0.2s ease;
+}
+
+.invoice-section:hover {
+  border-left-width: 10px;
+  background-color: #fcfcfc;
+}
+
+.category-header {
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 10px;
+}
+
+.grand-total-banner {
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  /* Efecto para que destaque sobre el resto */
+  box-shadow: 0 10px 15px -3px rgba(34, 139, 230, 0.3);
+}
+
+@media (max-width: 768px) {
+  .grand-total-banner h1 {
+    font-size: 28px !important;
+  }
+}
