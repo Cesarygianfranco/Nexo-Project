@@ -80,13 +80,18 @@ const ProductsList = () => {
 			});
 	};
 
-	return (
-		<>
-			{isLoading && (
-				<Flex justify="center" mt="xl">
-					<Loader size="lg" />
-				</Flex>
-			)}
+    return (
+        <>
+           
+            {!isLoading && <ProductForm onCreated={getData} categoryId={categoryId} />}
+
+            {/* Contenedor Principal con margen para respetar el Sidebar */}
+            <div style={{ marginLeft: '340px', padding: '20px' }}> 
+                {isLoading && (
+                    <Flex justify="center" mt="xl">
+                        <Loader size="lg" />
+                    </Flex>
+                )}
 
 			{!isLoading && products.length === 0 && (
 				<>
