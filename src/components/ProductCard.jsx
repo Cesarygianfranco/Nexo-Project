@@ -27,6 +27,17 @@ function ProductCard({ product, deleteProduct }) {
         withBorder
         miw={250}
         maw={300}
+        style={{
+				transition: "transform 0.2s ease, box-shadow 0.2s ease",
+			}}
+			onMouseEnter={(e) => {
+				e.currentTarget.style.transform = "translateY(-4px)";
+				e.currentTarget.style.boxShadow = "var(--mantine-shadow-xl)";
+			}}
+			onMouseLeave={(e) => {
+				e.currentTarget.style.transform = "translateY(0)";
+				e.currentTarget.style.boxShadow = "var(--mantine-shadow-md)";
+			}}
       >
         <Stack gap="xs">
           <Group justify="space-between">
