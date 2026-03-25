@@ -4,7 +4,7 @@ export { default as memoriaRam } from "./MemoriaRam.jpg";
 export { default as monitor } from "./monitor.jpg";
 export { default as mouse } from "./mouse.jpg";
 export { default as packsPC } from "./packsPC.jpg";
-export { default as pc } from "./PC.jpg";
+export { default as pc } from "./pc.jpg";
 export { default as penDrives } from "./penDrives.jpg";
 export { default as procesador } from "./procesador.jpg";
 export { default as tarjetaGrafica } from "./tarjetaGrafica.jpg";
