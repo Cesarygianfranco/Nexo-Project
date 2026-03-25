@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import axios from "axios";
 import { BASE_URL } from "../../service/api";
+
 import {
 	Card,
 	Text,
@@ -14,52 +15,40 @@ import {
 	Title,
 } from "@mantine/core";
 import { IconPackage, IconTrash, IconEdit } from "@tabler/icons-react";
-import axios from "axios";
-import ProductForm from "../components/ProductForms/ProductForm";
 
-const ProductsList = () => {
-	const { categoryId } = useParams();
-	const [products, setproducts] = useState([]);
+function BinPage() {
+	const [productDeleted, setProductDeleted] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
-	function getData() {
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		setIsLoading(true);
+	const getDataFromDB = () => {
 		axios
 			.get(`${BASE_URL}/products.json`)
 			.then((response) => {
-				const infoObj = response.data;
+				const dataObj = response.data;
 
-				if (infoObj) {
-					const arr = Object.keys(infoObj).map((id) => ({
-						id,
-						...infoObj[id],
-					}));
+				//Convert Object in Array
+				const dataArr = Object.keys(dataObj).map((id) => ({
+					id,
+					...dataObj[id],
+				}));
 
-					const filteredArr = arr.filter(
-						(item) => item.categoryId === categoryId,
-					);
+				const filteredData = dataArr.filter((elmentData) => {
+					return elmentData.isDeleted === true;
+				});
 
-					const secondFilter = filteredArr.filter((element) => {
-						return element.isDeleted === false;
-					});
-
-					setproducts(secondFilter);
-				} else {
-					setproducts([]);
-				}
+				setProductDeleted(filteredData);
 			})
 			.catch((error) => {
-				console.error("Error al obtener productos:", error);
+				console.error("We have problem with request!", error);
 			})
 			.finally(() => {
 				setIsLoading(false);
 			});
-	}
+	};
 
 	useEffect(() => {
-		getData();
-	}, [categoryId]);
+		getDataFromDB();
+	}, []);
 
 	const getStockColor = (amount) => {
 		if (amount < 5) return "red";
@@ -71,9 +60,9 @@ const ProductsList = () => {
 		const dataProduct = { isDeleted: true }; // Se envía solo el cambio
 
 		axios
-			.patch(`${BASE_URL}/products/${id}.json`, dataProduct)
+			.delete(`${BASE_URL}/products/${id}.json`, dataProduct)
 			.then(() => {
-				getData();
+				getDataFromDB();
 			})
 			.catch((error) => {
 				console.error("We can't delete the product", error);
@@ -88,19 +77,17 @@ const ProductsList = () => {
 				</Flex>
 			)}
 
-			{!isLoading && products.length === 0 && (
+			{!isLoading && productDeleted.length === 0 && (
 				<>
-					<ProductForm onCreated={getData} categoryId={categoryId} />
 					<Flex direction="column" align="center" mt="xl">
 						<Title order={3}>No products found!</Title>
-						<Text c="dimmed">There are no products in this category yet.</Text>
+						<Text c="dimmed">Your Bin is empty!</Text>
 					</Flex>
 				</>
 			)}
 
-			{!isLoading && products.length > 0 && (
+			{!isLoading && productDeleted.length > 0 && (
 				<>
-					<ProductForm onCreated={getData} categoryId={categoryId} />
 					<Flex
 						mih={70}
 						gap="xl"
@@ -110,7 +97,7 @@ const ProductsList = () => {
 						wrap="wrap"
 						mt="xl"
 					>
-						{products.map((product) => (
+						{productDeleted.map((product) => (
 							<Card
 								key={product.id}
 								shadow="sm"
@@ -175,6 +162,6 @@ const ProductsList = () => {
 			)}
 		</>
 	);
-};
+}
 
-export default ProductsList;
+export default BinPage;
