@@ -1,47 +1,110 @@
-import { Card, Image, Text, Badge, Button, Group } from "@mantine/core";
-import { Link } from "react-router-dom"
+import {
+	Card,
+	Image,
+	Text,
+	Badge,
+	ActionIcon,
+	Group,
+	Stack,
+	Box,
+} from "@mantine/core";
+import { Link } from "react-router-dom";
+import { IconEdit, IconTrash } from "@tabler/icons-react";
 
-const CategoryCard = (props) => {
-  return (
-    <div>
-      <Card shadow="sm" padding="lg" radius="md" withBorder maw={300}>
-        <Card.Section>
-          <Link to={`/products/${props.categoryObj.id}`}>
-          <Image
-            src={props.categoryObj.icon}
-            height={160}
-            miw={300} 
-            alt="Category Image"
-          />
-          </Link>
-        </Card.Section>
+const CategoryCard = ({ categoryObj, onEdit, onDelete }) => {
+	const { id, name, description, icon, lastActivity } = categoryObj;
 
-        <Group justify="space-between" mt="md" mb="xs">
-          <Text fw={500}>{props.categoryObj.name}</Text>
-          <Badge color="blue">{props.categoryObj.lastActivity}</Badge>
-        </Group>
+	return (
+		<Card
+			shadow="md"
+			radius="lg"
+			withBorder
+			maw={350}
+			style={{
+				transition: "transform 0.2s ease, box-shadow 0.2s ease",
+				cursor: "pointer",
+			}}
+			onMouseEnter={(e) => {
+				e.currentTarget.style.transform = "translateY(-4px)";
+				e.currentTarget.style.boxShadow = "var(--mantine-shadow-xl)";
+			}}
+			onMouseLeave={(e) => {
+				e.currentTarget.style.transform = "translateY(0)";
+				e.currentTarget.style.boxShadow = "var(--mantine-shadow-md)";
+			}}
+		>
+			<Card.Section style={{ position: "relative" }}>
+				<Link to={`/products/${id}`}>
+					<Image
+						src={icon}
+						height={180}
+						alt={name}
+						fallbackSrc="https://placehold.co/600x400?text=Sin+Imagen"
+					/>
+				</Link>
 
-        <Text size="sm" c="dimmed" lineClamp={3}>
-          {props.categoryObj.description}
-        </Text>
-        <Group>
-          <Button onClick={props.onEdit} color="blue" variant="filled" mt="md" radius="md" w="45%">
-            Edit
-          </Button>
-          <Button
-            onClick={() => props.onDelete(props.categoryObj.id)}
-            color="red"
-            variant="light"
-            mt="md"
-            radius="md"
-            w="45%"
-          >
-            Delete
-          </Button>
-        </Group>
-      </Card>
-    </div>
-  );
+				{lastActivity && (
+					<Badge
+						variant="filled"
+						color="blue"
+						size="sm"
+						style={{
+							position: "absolute",
+							top: 12,
+							left: 12,
+							pointerEvents: "none",
+						}}
+					>
+						{lastActivity}
+					</Badge>
+				)}
+
+				<Group gap={8} style={{ position: "absolute", top: 12, right: 12 }}>
+					<ActionIcon
+						onClick={(e) => {
+							e.preventDefault();
+							onEdit();
+						}}
+						variant="white"
+						color="yellow"
+						size="lg"
+						radius="md"
+						shadow="sm"
+					>
+						<IconEdit size={18} />
+					</ActionIcon>
+					<ActionIcon
+						onClick={(e) => {
+							e.preventDefault();
+							onDelete();
+						}}
+						variant="white"
+						color="red"
+						size="lg"
+						radius="md"
+						shadow="sm"
+					>
+						<IconTrash size={18} />
+					</ActionIcon>
+				</Group>
+			</Card.Section>
+
+			<Stack gap="xs" mt="md">
+				<Group justify="space-between" align="center">
+					<Text fw={800} size="xl" lh={1.2} style={{ flex: 1 }}>
+						{name || "Categoría"}
+					</Text>
+					<Text size="xs" c="dimmed" fw={600}>
+						#{id.toString().slice(-4)}
+					</Text>
+				</Group>
+
+				<Text size="sm" c="dimmed" lh={1.5} lineClamp={2}>
+					{description || "Sin descripción detallada disponible actualmente."}
+				</Text>
+			</Stack>
+		</Card>
+	);
 };
 
 export default CategoryCard;
