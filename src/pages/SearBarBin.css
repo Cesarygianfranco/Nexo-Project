@@ -1,0 +1,12 @@
+.searchbar-container-bin {
+	position: absolute;
+	top: 90px;
+	left: 40px;
+	color: var(--mantine-color-blue-9);
+	border-bottom: 1px solid transparent;
+	transition: border-bottom 0.8s ease;
+}
+
+.searchbar-container-bin:hover {
+	border-bottom: 1px solid #333;
+}

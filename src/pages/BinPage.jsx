@@ -13,12 +13,14 @@ import {
 	Flex,
 	Loader,
 	Title,
+	Input,
 } from "@mantine/core";
-import { IconPackage, IconTrash, IconEdit } from "@tabler/icons-react";
-
+import { IconPackage, IconTrash, IconRestore } from "@tabler/icons-react";
+import "./SearBarBin.css";
 function BinPage() {
 	const [productDeleted, setProductDeleted] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [inputValue, setInputValue] = useState("");
 
 	const getDataFromDB = () => {
 		axios
@@ -69,8 +71,40 @@ function BinPage() {
 			});
 	};
 
+	const restoreProduct = (id) => {
+		const dataRestore = { isDeleted: false };
+
+		axios
+			.patch(`${BASE_URL}/products/${id}.json`, dataRestore)
+			.then(() => {
+				getDataFromDB();
+			})
+			.catch((error) => {
+				console.error("We can't delete the product", error);
+			});
+	};
+
+	const filteredArr = productDeleted.filter((element) => {
+		return element.name.toLowerCase().includes(inputValue.toLowerCase());
+	});
+
 	return (
 		<>
+			{!isLoading && (
+				<div className="searchbar-container-bin">
+					<Input
+						variant="unstyled"
+						size="md"
+						radius="md"
+						placeholder="Search"
+						value={inputValue}
+						onChange={(e) => {
+							setInputValue(e.target.value);
+						}}
+					/>
+				</div>
+			)}
+
 			{isLoading && (
 				<Flex justify="center" mt="xl">
 					<Loader size="lg" />
@@ -97,7 +131,7 @@ function BinPage() {
 						wrap="wrap"
 						mt="xl"
 					>
-						{productDeleted.map((product) => (
+						{filteredArr.map((product) => (
 							<Card
 								key={product.id}
 								shadow="sm"
@@ -139,8 +173,13 @@ function BinPage() {
 										</Stack>
 
 										<Group gap={5}>
-											<ActionIcon variant="light" color="yellow" size="lg">
-												<IconEdit size={18} />
+											<ActionIcon
+												variant="light"
+												color="green"
+												size="lg"
+												onClick={() => restoreProduct(product.id)}
+											>
+												<IconRestore size={18} />
 											</ActionIcon>
 											<ActionIcon
 												onClick={() => {
