@@ -4,8 +4,6 @@ import { BASE_URL } from "../../service/api";
 import { Text, Flex, Loader, Title, Input } from "@mantine/core";
 import ProductCard from "../components/ProductCard";
 import "./ProductsList.css"
-
-
 import axios from "axios";
 import ProductForm from "../components/ProductForms/ProductForm";
 
@@ -72,57 +70,56 @@ const ProductsList = () => {
 
   return (
     <>
-    <div className="searchbar-container-products">
-          <Input
-            variant="unstyled"
-            size="md"
-            radius="md"
-            placeholder="Search"
-            value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value);
-            }}
-          />
-        </div>
-      {!isLoading && (
-        <ProductForm onCreated={getData} categoryId={categoryId} />
+    {!isLoading && <ProductForm onCreated={getData} categoryId={categoryId} />}
+
+    {/* Contenedor Principal */}
+    <div className="products-main-content">
+      
+      <div className="searchbar-container-products">
+        <Input
+          variant="filled"
+          size="md"
+          radius="md"
+          placeholder="Search products..."
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          mb="xl" 
+        />
+      </div>
+
+      {isLoading && (
+        <Flex justify="center" mt="xl">
+          <Loader size="lg" />
+        </Flex>
       )}
 
-      {/* Contenedor Principal con margen para respetar el Sidebar */}
-      <div style={{marginLeft: "340px", padding: "20px" }}>
-        {isLoading && (
-          <Flex justify="center" mt="xl">
-            <Loader size="lg" />
-          </Flex>
-        )}
+      {!isLoading && products.length === 0 && (
+        <Flex direction="column" align="center" mt="50px">
+          <Title order={3}>No products found!</Title>
+          <Text c="dimmed">There are no products in this category yet.</Text>
+        </Flex>
+      )}
 
-        {!isLoading && products.length === 0 && (
-          <Flex direction="column" align="center" mt="100px">
-            <Title order={3}>No products found!</Title>
-            <Text c="dimmed">There are no products in this category yet.</Text>
-          </Flex>
-        )}
-
-        {!isLoading && products.length > 0 && (
-          <Flex
-            mih={70}
-            gap="xl"
-            justify="flex-start"
-            align="flex-start"
-            direction="row"
-            wrap="wrap"
-          >
-            {filteredArr.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                deleteProduct={deleteProduct}
-              />
-            ))}
-          </Flex>
-        )}
-      </div>
-    </>
+      {!isLoading && products.length > 0 && (
+        <Flex
+          mih={70}
+          gap="xl"
+          justify="center"
+          align="flex-start"
+          direction="row"
+          wrap="wrap"
+        >
+          {filteredArr.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              deleteProduct={deleteProduct}
+            />
+          ))}
+        </Flex>
+      )}
+    </div>
+  </>
   );
 };
 
