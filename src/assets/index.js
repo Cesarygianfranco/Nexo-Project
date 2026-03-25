@@ -1,6 +1,6 @@
 export { default as laptop } from "./laptop.jpg";
 export { default as discoduro } from "./discoduro.jpg";
-export { default as memoriaRam } from "./MemoriaRam.jpg";
+export { default as memoriaRam } from "./memoriaRam.jpg";
 export { default as monitor } from "./monitor.jpg";
 export { default as mouse } from "./mouse.jpg";
 export { default as packsPC } from "./packsPC.jpg";
