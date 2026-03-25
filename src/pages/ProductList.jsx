@@ -81,33 +81,32 @@ const ProductsList = () => {
 
     return (
         <>
-            {isLoading && (
-                <Flex justify="center" mt="xl">
-                    <Loader size="lg" />
-                </Flex>
-            )}
+           
+            {!isLoading && <ProductForm onCreated={getData} categoryId={categoryId} />}
 
-            {!isLoading && products.length === 0 && (
-                <>
-                    <ProductForm onCreated={getData} categoryId={categoryId} />
-                    <Flex direction="column" align="center" mt="xl">
+            {/* Contenedor Principal con margen para respetar el Sidebar */}
+            <div style={{ marginLeft: '340px', padding: '20px' }}> 
+                {isLoading && (
+                    <Flex justify="center" mt="xl">
+                        <Loader size="lg" />
+                    </Flex>
+                )}
+
+                {!isLoading && products.length === 0 && (
+                    <Flex direction="column" align="center" mt="100px">
                         <Title order={3}>No products found!</Title>
                         <Text c="dimmed">There are no products in this category yet.</Text>
                     </Flex>
-                </>
-            )}
+                )}
 
-            {!isLoading && products.length > 0 && (
-                <>
-                    <ProductForm onCreated={getData} categoryId={categoryId} />
+                {!isLoading && products.length > 0 && (
                     <Flex
                         mih={70}
                         gap="xl"
-                        justify="center"
+                        justify="flex-start" 
                         align="flex-start"
                         direction="row"
                         wrap="wrap"
-                        mt="xl"
                     >
                         {products.map((product) => (
                             <Card
@@ -117,6 +116,7 @@ const ProductsList = () => {
                                 radius="md"
                                 withBorder
                                 miw={250}
+                                maw={300} 
                             >
                                 <Stack gap="xs">
                                     <Group justify="space-between">
@@ -125,39 +125,23 @@ const ProductsList = () => {
                                             {product.amount} pcs
                                         </Badge>
                                     </Group>
-
                                     <Stack gap={2} mt="sm">
-                                        <Text fw={700} size="lg" lineClamp={1}>
-                                            {product.name}
-                                        </Text>
+                                        <Text fw={700} size="lg" lineClamp={1}>{product.name}</Text>
                                         <Text size="xs" c="dimmed" lineClamp={2} h={32}>
                                             {product.description || "No description"}
                                         </Text>
                                     </Stack>
-
                                     <Divider my="sm" variant="dashed" />
-
                                     <Group justify="space-between" align="flex-end">
                                         <Stack gap={0}>
-                                            <Text size="xs" c="dimmed">
-                                                Price
-                                            </Text>
-                                            <Text size="xl" fw={900} c="blue">
-                                                {product.value}€
-                                            </Text>
+                                            <Text size="xs" c="dimmed">Price</Text>
+                                            <Text size="xl" fw={900} c="blue">{product.value}€</Text>
                                         </Stack>
-
                                         <Group gap={5}>
-                                            <ActionIcon variant="light" color="yellow" size="lg">
-                                                <IconEdit size={18} />
-                                            </ActionIcon>
-                                            <ActionIcon
-                                                onClick={() => {
-                                                    deleteProduct(product.id);
-                                                }}
-                                                variant="light"
-                                                color="red"
-                                                size="lg"
+                                            <ActionIcon variant="light" color="yellow" size="lg"><IconEdit size={18} /></ActionIcon>
+                                            <ActionIcon 
+                                                onClick={() => deleteProduct(product.id)} 
+                                                variant="light" color="red" size="lg"
                                             >
                                                 <IconTrash size={18} />
                                             </ActionIcon>
@@ -167,10 +151,10 @@ const ProductsList = () => {
                             </Card>
                         ))}
                     </Flex>
-                </>
-            )}
+                )}
+            </div>
         </>
-    );
-};
+    )
+}
 
 export default ProductsList;
