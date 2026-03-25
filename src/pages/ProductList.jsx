@@ -23,7 +23,6 @@ const ProductsList = () => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	function getData() {
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 		setIsLoading(true);
 		axios
 			.get(`${BASE_URL}/products.json`)
@@ -68,7 +67,7 @@ const ProductsList = () => {
 	};
 
 	const deleteProduct = (id) => {
-		const dataProduct = { isDeleted: true }; // Se envía solo el cambio
+		const dataProduct = { isDeleted: true };
 
 		axios
 			.patch(`${BASE_URL}/products/${id}.json`, dataProduct)
@@ -80,32 +79,27 @@ const ProductsList = () => {
 			});
 	};
 
-    return (
-        <>
-           
-            {!isLoading && <ProductForm onCreated={getData} categoryId={categoryId} />}
-
-            {/* Contenedor Principal con margen para respetar el Sidebar */}
-            <div style={{ marginLeft: '340px', padding: '20px' }}> 
-                {isLoading && (
-                    <Flex justify="center" mt="xl">
-                        <Loader size="lg" />
-                    </Flex>
-                )}
-
-			{!isLoading && products.length === 0 && (
-				<>
+	return (
+		<>
+			<div style={{ marginLeft: "340px", padding: "20px" }}>
+				{!isLoading && (
 					<ProductForm onCreated={getData} categoryId={categoryId} />
+				)}
+
+				{isLoading && (
+					<Flex justify="center" mt="xl">
+						<Loader size="lg" />
+					</Flex>
+				)}
+
+				{!isLoading && products.length === 0 && (
 					<Flex direction="column" align="center" mt="xl">
 						<Title order={3}>No products found!</Title>
 						<Text c="dimmed">There are no products in this category yet.</Text>
 					</Flex>
-				</>
-			)}
+				)}
 
-			{!isLoading && products.length > 0 && (
-				<>
-					<ProductForm onCreated={getData} categoryId={categoryId} />
+				{!isLoading && products.length > 0 && (
 					<Flex
 						mih={70}
 						gap="xl"
@@ -161,9 +155,7 @@ const ProductsList = () => {
 												<IconEdit size={18} />
 											</ActionIcon>
 											<ActionIcon
-												onClick={() => {
-													deleteProduct(product.id);
-												}}
+												onClick={() => deleteProduct(product.id)}
 												variant="light"
 												color="red"
 												size="lg"
@@ -176,8 +168,8 @@ const ProductsList = () => {
 							</Card>
 						))}
 					</Flex>
-				</>
-			)}
+				)}
+			</div>
 		</>
 	);
 };
