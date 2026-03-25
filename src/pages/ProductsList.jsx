@@ -89,7 +89,7 @@ const ProductsList = () => {
       )}
 
       {/* Contenedor Principal con margen para respetar el Sidebar */}
-      <div style={{ marginLeft: "340px", padding: "20px" }}>
+      <div style={{marginLeft: "340px", padding: "20px" }}>
         {isLoading && (
           <Flex justify="center" mt="xl">
             <Loader size="lg" />

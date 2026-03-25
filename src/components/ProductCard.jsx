@@ -1,4 +1,5 @@
 import { IconPackage, IconTrash, IconEdit } from "@tabler/icons-react";
+import { Link } from "react-router-dom"
 import {
   Card,
   Text,
@@ -53,9 +54,11 @@ function ProductCard({ product, deleteProduct }) {
               </Text>
             </Stack>
             <Group gap={5}>
+              <Link to={`/productsDetails/${product.id}`}>
               <ActionIcon variant="light" color="yellow" size="lg">
                 <IconEdit size={18} />
               </ActionIcon>
+              </Link>
               <ActionIcon
                 onClick={() => deleteProduct(product.id)}
                 variant="light"
