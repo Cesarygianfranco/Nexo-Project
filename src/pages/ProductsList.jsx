@@ -75,16 +75,15 @@ const ProductsList = () => {
     {/* Contenedor Principal */}
     <div className="products-main-content">
       
-      {/* La Searchbar ahora está AQUÍ, dentro del contenido que se desplaza */}
       <div className="searchbar-container-products">
         <Input
-          variant="filled" // Un estilo con fondo suele quedar mejor en searchbars
+          variant="filled"
           size="md"
           radius="md"
           placeholder="Search products..."
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          mb="xl" // Margen inferior para separar de las cards
+          mb="xl" 
         />
       </div>
 

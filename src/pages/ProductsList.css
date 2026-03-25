@@ -5,14 +5,14 @@
 
 .searchbar-container-products {
   width: 100%;
-  max-width: 600px; /* Para que no sea infinitamente larga en monitores grandes */
-  margin: 0 auto 30px auto; /* Centrada y con espacio abajo */
+  max-width: 600px; 
+  margin: 0 auto 30px auto; 
 }
 
 /* ESCRITORIO */
 @media (min-width: 769px) {
   .products-main-content {
-    margin-left: 300px; /* Espacio exacto del sidebar */
+    margin-left: 300px; 
   }
 }
 

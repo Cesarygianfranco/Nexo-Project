@@ -10,13 +10,13 @@
   border-right: 1px solid #e0e0e0;
 }
 
-/* Cuando la pantalla es pequeña */
+
 @media (max-width: 768px) {
   .product-form-container {
-    position: relative; /* Deja de flotar */
+    position: relative; 
     top: 0;
-    width: 100%; /* Ocupa todo el ancho */
-    height: auto; /* Se ajusta a su contenido */
+    width: 100%; 
+    height: auto; 
     border-right: none;
     border-bottom: 1px solid #e0e0e0;
     margin-bottom: 30px;
