@@ -1,6 +1,6 @@
 .header {
   height: 80px;
-  margin-bottom: 120px;
+  margin-bottom: 50px;
   background-color: var(--mantine-color-blue-9);
   border-bottom: 1px solid var(--mantine-color-blue-9);
   padding-left: var(--mantine-spacing-md);
