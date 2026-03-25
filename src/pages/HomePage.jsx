@@ -59,18 +59,36 @@ const HomePage = () => {
 
 	function deleteCategory(categoryId) {
 		axios
-			.delete(`${BASE_URL}/categories/${categoryId}.json`)
+			.get(`${BASE_URL}/products.json`)
+			.then((response) => {
+				const products = response.data;
+				if (products) {
+					const productsToDelete = Object.keys(products).filter(
+						(key) => products[key].categoryId === categoryId,
+					);
+
+					const deletePromises = productsToDelete.map((prodId) =>
+						axios.delete(`${BASE_URL}/products/${prodId}.json`),
+					);
+
+					return Promise.all(deletePromises);
+				}
+			})
+			.then(() => {
+				return axios.delete(`${BASE_URL}/categories/${categoryId}.json`);
+			})
 			.then(() => {
 				getData();
+				stack.closeAll();
 			})
 			.catch((err) => {
-				console.error("Error al eliminar:", err);
+				console.error("Error en el borrado en cascada:", err);
 			});
 	}
 
 	const handleEditClick = (category) => {
-		setSelectedCategory(category); // Guardar la categoría completa
-		open(); // Abrir el modal (useDisclosure)
+		setSelectedCategory(category);
+		open();
 	};
 
 	useEffect(() => {
@@ -89,7 +107,7 @@ const HomePage = () => {
 					<Button onClick={stack.closeAll} variant="default">
 						Cancel
 					</Button>
-					{/* Nota: Aquí llamas a 'confirm-action', asegúrate de tener ese modal registrado también */}
+
 					<Button
 						onClick={() => {
 							deleteCategory(selectedCategory);
@@ -102,7 +120,6 @@ const HomePage = () => {
 				</Group>
 			</Modal>
 
-			{/* <--- Cerrado correctamente aquí */}
 			<FormButton onCreate={getData} />
 			<div className="searchbar-container">
 				<Input
