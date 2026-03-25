@@ -90,11 +90,18 @@ const ValuationPage = () => {
           if (categoryProducts.length === 0) return null;
 
           return (
-            <Paper key={category.id} withBorder shadow="sm" p="xl" radius="md" className="invoice-section">
+            <Paper
+              key={category.id}
+              withBorder
+              shadow="sm"
+              p="xl"
+              radius="md"
+              className="invoice-section"
+            >
               <Title order={3} mb="md" c="blue" className="category-header">
                 {category.name}
               </Title>
-              
+
               <Table verticalSpacing="sm" highlightOnHover>
                 <Table.Thead>
                   <Table.Tr>
@@ -106,16 +113,36 @@ const ValuationPage = () => {
                 </Table.Thead>
                 <Table.Tbody>
                   {categoryProducts.map((products) => (
-					
                     <Table.Tr key={products.id}>
-					  <Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/productsDetails/${products.id}`}>
-                      	<Table.Td fw={500}>{products.name}</Table.Td>
-					  </Link>
+                        <Table.Td fw={500}>
+                          <Link
+                            to={`/productsDetails/${products.id}`}
+                            style={{
+                              textDecoration: "none",
+                              color: "var(--mantine-color-blue-6)",
+                              fontWeight: 600,
+                              transition: "color 0.2s ease",
+                            }}
+                            onMouseOver={(e) =>
+                              (e.target.style.color =
+                                "var(--mantine-color-orange-6)")
+                            }
+                            onMouseOut={(e) =>
+                              (e.target.style.color =
+                                "var(--mantine-color-blue-6)")
+                            }
+                          >
+                            {products.name}
+                          </Link>
+                        </Table.Td>
                       <Table.Td ta="right">{products.amount}</Table.Td>
-                      <Table.Td ta="right">{products.value.toFixed(2)}€</Table.Td>
-                      <Table.Td ta="right" fw={600}>{(products.amount * products.value).toFixed(2)}€</Table.Td>
+                      <Table.Td ta="right">
+                        {products.value.toFixed(2)}€
+                      </Table.Td>
+                      <Table.Td ta="right" fw={600}>
+                        {(products.amount * products.value).toFixed(2)}€
+                      </Table.Td>
                     </Table.Tr>
-					
                   ))}
                 </Table.Tbody>
               </Table>
@@ -123,8 +150,12 @@ const ValuationPage = () => {
               <Group justify="flex-end" mt="md">
                 <Paper withBorder p="xs" bg="gray.0" radius="sm">
                   <Group gap="xl">
-                    <Text size="sm" fw={700}>CATEGORY TOTAL:</Text>
-                    <Text size="lg" fw={800} c="blue">{catTotal.toFixed(2)}€</Text>
+                    <Text size="sm" fw={700}>
+                      CATEGORY TOTAL:
+                    </Text>
+                    <Text size="lg" fw={800} c="blue">
+                      {catTotal.toFixed(2)}€
+                    </Text>
                   </Group>
                 </Paper>
               </Group>
