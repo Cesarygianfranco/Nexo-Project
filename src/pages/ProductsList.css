@@ -1,12 +1,29 @@
-.searchbar-container-products {
-	position: fixed;
-	top: 76px;
-	left: 320px;
-	color: var(--mantine-color-blue-9);
-	border-bottom: 1px solid transparent;
-	transition: border-bottom 0.8s ease;
+.products-main-content {
+  padding: 20px;
+  transition: all 0.3s ease;
 }
 
-.searchbar-container-products:hover {
-	border-bottom: 1px solid #333;
+.searchbar-container-products {
+  width: 100%;
+  max-width: 600px; /* Para que no sea infinitamente larga en monitores grandes */
+  margin: 0 auto 30px auto; /* Centrada y con espacio abajo */
+}
+
+/* ESCRITORIO */
+@media (min-width: 769px) {
+  .products-main-content {
+    margin-left: 300px; /* Espacio exacto del sidebar */
+  }
+}
+
+/* MÓVIL Y TABLET */
+@media (max-width: 768px) {
+  .products-main-content {
+    margin-left: 0;
+    padding: 15px;
+  }
+  
+  .searchbar-container-products {
+    padding: 0 10px;
+  }
 }
