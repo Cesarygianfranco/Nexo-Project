@@ -1,206 +1,210 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../service/api";
-
 import {
-	Card,
-	Text,
-	Badge,
-	Group,
-	ActionIcon,
-	Stack,
-	Divider,
-	Flex,
-	Loader,
-	Title,
-	Input,
+  Card,
+  Text,
+  Badge,
+  Group,
+  ActionIcon,
+  Stack,
+  Divider,
+  Flex,
+  Loader,
+  Title,
+  Input,
+  Container,
+  Box,
+  Paper,
+  Center
 } from "@mantine/core";
-import { IconPackage, IconTrash, IconRestore } from "@tabler/icons-react";
-import "./SearBarBin.css";
+import { 
+  IconPackage, 
+  IconTrash, 
+  IconRestore, 
+  IconSearch, 
+  IconRecycle, 
+  IconAlertCircle 
+} from "@tabler/icons-react";
+import "./BinPage.css";
+
 function BinPage() {
-	const [productDeleted, setProductDeleted] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
-	const [inputValue, setInputValue] = useState("");
+  const [productDeleted, setProductDeleted] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [inputValue, setInputValue] = useState("");
 
-	const getDataFromDB = () => {
-		axios
-			.get(`${BASE_URL}/products.json`)
-			.then((response) => {
-				const dataObj = response.data;
+  const getDataFromDB = () => {
+    setIsLoading(true);
+    axios
+      .get(`${BASE_URL}/products.json`)
+      .then((response) => {
+        const dataObj = response.data;
+        if (dataObj) {
+          const dataArr = Object.keys(dataObj).map((id) => ({
+            id,
+            ...dataObj[id],
+          }));
+          const filteredData = dataArr.filter((el) => el.isDeleted === true);
+          setProductDeleted(filteredData);
+        } else {
+          setProductDeleted([]);
+        }
+      })
+      .catch((err) => console.error("Error fetching bin:", err))
+      .finally(() => setIsLoading(false));
+  };
 
-				//Convert Object in Array
-				const dataArr = Object.keys(dataObj).map((id) => ({
-					id,
-					...dataObj[id],
-				}));
+  useEffect(() => {
+    getDataFromDB();
+  }, []);
 
-				const filteredData = dataArr.filter((elmentData) => {
-					return elmentData.isDeleted === true;
-				});
+  const restoreProduct = (id) => {
+    axios.patch(`${BASE_URL}/products/${id}.json`, { isDeleted: false })
+      .then(() => getDataFromDB());
+  };
 
-				setProductDeleted(filteredData);
-			})
-			.catch((error) => {
-				console.error("We have problem with request!", error);
-			})
-			.finally(() => {
-				setIsLoading(false);
-			});
-	};
+  const hardDeleteProduct = (id) => {
+    axios.delete(`${BASE_URL}/products/${id}.json`)
+      .then(() => getDataFromDB());
+  };
 
-	useEffect(() => {
-		getDataFromDB();
-	}, []);
+  const filteredArr = productDeleted.filter((el) =>
+    el.name.toLowerCase().includes(inputValue.toLowerCase())
+  );
 
-	const getStockColor = (amount) => {
-		if (amount < 5) return "red";
-		if (amount < 15) return "orange";
-		return "green";
-	};
+  return (
+    <Container size="xl" py="xl">
+      {/* Header idéntico al estilo de la app */}
+      <Box mb="xl">
+        <Group justify="space-between" align="center">
+          <Stack gap={0}>
+            <Group gap="sm">
+              <IconRecycle size={32} color="var(--mantine-color-blue-6)" />
+              <Title order={1}>Trash Bin</Title>
+            </Group>
+            <Text c="dimmed">Manage and restore your deleted products</Text>
+          </Stack>
 
-	const deleteProduct = (id) => {
-		const dataProduct = { isDeleted: true }; // Se envía solo el cambio
+          {!isLoading && productDeleted.length > 0 && (
+            <Badge size="lg" variant="light" color="blue">
+              {productDeleted.length} items archived
+            </Badge>
+          )}
+        </Group>
+      </Box>
 
-		axios
-			.delete(`${BASE_URL}/products/${id}.json`, dataProduct)
-			.then(() => {
-				getDataFromDB();
-			})
-			.catch((error) => {
-				console.error("We can't delete the product", error);
-			});
-	};
+      {/* Barra de búsqueda consistente */}
+      <div
+        className="searchbar-container-products"
+        style={{ marginBottom: "2rem" }}
+      >
+        <Input
+          variant="filled"
+          size="md"
+          radius="md"
+          placeholder="Search products in bin..."
+          leftSection={<IconSearch size={18} />}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+      </div>
 
-	const restoreProduct = (id) => {
-		const dataRestore = { isDeleted: false };
+      {isLoading && (
+        <Center mt="xl">
+          <Loader size="lg" />
+        </Center>
+      )}
 
-		axios
-			.patch(`${BASE_URL}/products/${id}.json`, dataRestore)
-			.then(() => {
-				getDataFromDB();
-			})
-			.catch((error) => {
-				console.error("We can't delete the product", error);
-			});
-	};
+      {!isLoading && productDeleted.length === 0 && (
+        <Flex direction="column" align="center" mt="50px">
+          <Title order={3}>The bin is empty</Title>
+          <Text c="dimmed">No products have been deleted yet.</Text>
+        </Flex>
+      )}
 
-	const filteredArr = productDeleted.filter((element) => {
-		return element.name.toLowerCase().includes(inputValue.toLowerCase());
-	});
+      {!isLoading && productDeleted.length > 0 && (
+        <Flex gap="xl" justify="center" wrap="wrap">
+          {filteredArr.map((product) => (
+            <Card
+              key={product.id}
+              shadow="sm"
+              padding="lg"
+              radius="md"
+              withBorder
+              miw={280}
+              className="bin-card-style"
+			  style={{
+				transition: "transform 0.2s ease, box-shadow 0.2s ease",
+			}}
+			onMouseEnter={(e) => {
+				e.currentTarget.style.transform = "translateY(-4px)";
+				e.currentTarget.style.boxShadow = "var(--mantine-shadow-xl)";
+			}}
+			onMouseLeave={(e) => {
+				e.currentTarget.style.transform = "translateY(0)";
+				e.currentTarget.style.boxShadow = "var(--mantine-shadow-md)";
+			}}
+            >
+              <Stack gap="xs">
+                <Group justify="space-between">
+                  <IconPackage
+                    size={32}
+                    color="var(--mantine-color-gray-4)"
+                    stroke={1.5}
+                  />
+                  <Badge color="gray" variant="light">
+                    Archived
+                  </Badge>
+                </Group>
 
-	return (
-		<>
-			{!isLoading && (
-				<div className="searchbar-container-bin">
-					<Input
-						variant="unstyled"
-						size="md"
-						radius="md"
-						placeholder="Search"
-						value={inputValue}
-						onChange={(e) => {
-							setInputValue(e.target.value);
-						}}
-					/>
-				</div>
-			)}
+                <Stack gap={2} mt="sm">
+                  <Text fw={700} size="lg" lineClamp={1}>
+                    {product.name}
+                  </Text>
+                  <Text size="xs" c="dimmed" lineClamp={2} h={32}>
+                    {product.description || "No description provided"}
+                  </Text>
+                </Stack>
 
-			{isLoading && (
-				<Flex justify="center" mt="xl">
-					<Loader size="lg" />
-				</Flex>
-			)}
+                <Divider my="sm" variant="dashed" />
 
-			{!isLoading && productDeleted.length === 0 && (
-				<>
-					<Flex direction="column" align="center" mt="xl">
-						<Title order={3}>No products found!</Title>
-						<Text c="dimmed">Your Bin is empty!</Text>
-					</Flex>
-				</>
-			)}
+                <Group justify="space-between" align="flex-end">
+                  <Stack gap={0}>
+                    <Text size="xs" c="dimmed">
+                      Original Price
+                    </Text>
+                    <Text size="xl" fw={900} c="blue">
+                      {product.value}€
+                    </Text>
+                  </Stack>
 
-			{!isLoading && productDeleted.length > 0 && (
-				<>
-					<Flex
-						mih={70}
-						gap="xl"
-						justify="center"
-						align="flex-start"
-						direction="row"
-						wrap="wrap"
-						mt="xl"
-					>
-						{filteredArr.map((product) => (
-							<Card
-								key={product.id}
-								shadow="sm"
-								padding="lg"
-								radius="md"
-								withBorder
-								miw={250}
-							>
-								<Stack gap="xs">
-									<Group justify="space-between">
-										<IconPackage size={32} color="gray" stroke={1.5} />
-										<Badge
-											color={getStockColor(product.amount)}
-											variant="light"
-										>
-											{product.amount} pcs
-										</Badge>
-									</Group>
+                  <Group gap={8}>
+                    <ActionIcon
+                      variant="light"
+                      color="green"
+                      size="lg"
+                      onClick={() => restoreProduct(product.id)}
+                    >
+                      <IconRestore size={20} />
+                    </ActionIcon>
 
-									<Stack gap={2} mt="sm">
-										<Text fw={700} size="lg" lineClamp={1}>
-											{product.name}
-										</Text>
-										<Text size="xs" c="dimmed" lineClamp={2} h={32}>
-											{product.description || "No description"}
-										</Text>
-									</Stack>
-
-									<Divider my="sm" variant="dashed" />
-
-									<Group justify="space-between" align="flex-end">
-										<Stack gap={0}>
-											<Text size="xs" c="dimmed">
-												Price
-											</Text>
-											<Text size="xl" fw={900} c="blue">
-												{product.value}€
-											</Text>
-										</Stack>
-
-										<Group gap={5}>
-											<ActionIcon
-												variant="light"
-												color="green"
-												size="lg"
-												onClick={() => restoreProduct(product.id)}
-											>
-												<IconRestore size={18} />
-											</ActionIcon>
-											<ActionIcon
-												onClick={() => {
-													deleteProduct(product.id);
-												}}
-												variant="light"
-												color="red"
-												size="lg"
-											>
-												<IconTrash size={18} />
-											</ActionIcon>
-										</Group>
-									</Group>
-								</Stack>
-							</Card>
-						))}
-					</Flex>
-				</>
-			)}
-		</>
-	);
+                    <ActionIcon
+                      variant="light"
+                      color="red"
+                      size="lg"
+                      onClick={() => hardDeleteProduct(product.id)}
+                    >
+                      <IconTrash size={20} />
+                    </ActionIcon>
+                  </Group>
+                </Group>
+              </Stack>
+            </Card>
+          ))}
+        </Flex>
+      )}
+    </Container>
+  );
 }
 
 export default BinPage;

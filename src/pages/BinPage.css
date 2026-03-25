@@ -1,0 +1,56 @@
+.bin-container {
+  min-height: 100vh;
+  background-color: #fafafa; /* Fondo sutilmente gris */
+}
+
+.searchbar-bin-wrapper {
+  max-width: 500px;
+  margin: 0 auto 40px auto;
+  background-color: white;
+}
+
+.bin-card {
+  width: 300px;
+  background-color: #fff;
+  border-color: #e9ecef;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: visible;
+}
+
+.bin-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: var(--mantine-color-gray-4); /* Línea gris de "archivado" */
+  border-radius: var(--mantine-radius-md) var(--mantine-radius-md) 0 0;
+}
+
+.bin-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--mantine-shadow-md);
+  border-color: var(--mantine-color-orange-2);
+}
+
+.bin-card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.icon-wrapper-deleted {
+  background-color: #e9ecef;
+  color: #adb5bd;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Efecto de desvanecimiento para indicar que es algo borrado */
+.bin-card .mantine-Text-root {
+  opacity: 0.85;
+}
