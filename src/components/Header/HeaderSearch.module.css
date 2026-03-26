@@ -1,6 +1,13 @@
 .header {
   height: 80px;
-  margin-bottom: 50px;
+  /* CAMBIOS PARA FIXED */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100; 
+  
+ 
   background-color: var(--mantine-color-blue-9);
   border-bottom: 1px solid var(--mantine-color-blue-9);
   padding-left: var(--mantine-spacing-md);
@@ -59,3 +66,4 @@
     color: var(--mantine-color-blue-9);
   }
 }
+
