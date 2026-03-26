@@ -1,0 +1,15 @@
+:root {
+	--mi-color-especial: var(--mantine-color-blue-9);
+
+	font-family: var(--mantine-font-family);
+}
+
+[data-mantine-color-scheme="dark"] {
+	--mi-color-especial: var(--mantine-color-orange-5);
+}
+
+.mi-contenedor-personalizado {
+	background-color: var(--mantine-color-body);
+	color: var(--mantine-color-text);
+	border: 1px solid var(--mi-color-especial);
+}

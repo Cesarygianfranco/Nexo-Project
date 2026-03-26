@@ -4,6 +4,7 @@ import { useDisclosure } from "@mantine/hooks";
 import NexoLogo from "../NexoLogo";
 import { Link } from "react-router-dom";
 import classes from "./HeaderSearch.module.css";
+import { ColorSchemeToggle } from "../ColorSchemeToggle";
 
 const links = [
   { link: "/", label: "Home" },
@@ -59,9 +60,12 @@ function HeaderSearch() {
         <Group>
           <Group ml={50} gap={5} className={classes.links} visibleFrom="sm">
             {items}
+            <ColorSchemeToggle />
           </Group>
         </Group>
       </div>
+
+
 
       {/* Menú lateral para móviles */}
       <Drawer

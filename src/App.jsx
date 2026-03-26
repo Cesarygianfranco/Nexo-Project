@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import "@mantine/core/styles.css";
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, createTheme } from "@mantine/core";
 import "./App.css";
 import HeaderSearch from "./components/Header/HeaderSearch";
 import ProductsList from "./pages/ProductsList";
@@ -9,10 +9,15 @@ import BinPage from "./pages/BinPage";
 import EditProductPage from "./pages/EditProductPage";
 import ValuationPage from "./pages/ValuationPage";
 
+
+const theme = createTheme({
+
+});
+
 function App() {
 	return (
 		<>
-			<MantineProvider>
+			<MantineProvider theme={theme} defaultColorScheme="light">
 				<HeaderSearch />
 
 				<Routes>
