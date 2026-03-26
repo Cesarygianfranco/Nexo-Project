@@ -11,7 +11,12 @@ import {
   Box,
 } from "@mantine/core";
 import { Link } from "react-router-dom";
-import { IconEdit, IconTrash, IconArrowRight, IconCategory } from "@tabler/icons-react";
+import {
+  IconEdit,
+  IconTrash,
+  IconArrowRight,
+  IconCategory,
+} from "@tabler/icons-react";
 
 const CategoryCard = ({ categoryObj, onEdit, onDelete }) => {
   const { id, name, description, icon, lastActivity } = categoryObj;
@@ -38,8 +43,6 @@ const CategoryCard = ({ categoryObj, onEdit, onDelete }) => {
         e.currentTarget.style.boxShadow = "var(--mantine-shadow-sm)";
       }}
     >
-
-
       <Box
         style={{
           position: "absolute",
@@ -47,14 +50,20 @@ const CategoryCard = ({ categoryObj, onEdit, onDelete }) => {
           right: 0,
           width: "100px",
           height: "100px",
-          background: "linear-gradient(135deg, var(--mantine-color-blue-light) 0%, transparent 100%)",
+          background:
+            "linear-gradient(135deg, var(--mantine-color-blue-light) 0%, transparent 100%)",
           borderRadius: "0 25% 0 25%",
           opacity: 0.5,
           zIndex: 0,
         }}
       />
 
-      <Group justify="space-between" align="start" wrap="nowrap" style={{ zIndex: 1 }}>
+      <Group
+        justify="space-between"
+        align="start"
+        wrap="nowrap"
+        style={{ zIndex: 1 }}
+      >
         <Paper
           radius="lg"
           withBorder
@@ -70,12 +79,12 @@ const CategoryCard = ({ categoryObj, onEdit, onDelete }) => {
         >
           <Link to={`/products/${id}`}>
             <Image
-              src={icon}
+              src={icon.startsWith("/") ? icon : `/images/laptop.jpg`} // Si no empieza por /, usa una por defecto
               alt={name}
               height={90}
               fit="cover"
-              fallbackSrc="https://placehold.co/200x200?text=Category"
-              style={{ scale: "1.8" }}
+              fallbackSrc="https://placehold.co/200x200?text=Error+Ruta"
+              style={{ scale: 1.8 }}
             />
           </Link>
         </Paper>
@@ -83,7 +92,10 @@ const CategoryCard = ({ categoryObj, onEdit, onDelete }) => {
         <Stack gap={5} align="flex-end">
           <Group gap={4}>
             <ActionIcon
-              onClick={(e) => { e.preventDefault(); onEdit(); }}
+              onClick={(e) => {
+                e.preventDefault();
+                onEdit();
+              }}
               variant="light"
               color="yellow.8"
               radius="md"
@@ -92,7 +104,10 @@ const CategoryCard = ({ categoryObj, onEdit, onDelete }) => {
               <IconEdit size={18} />
             </ActionIcon>
             <ActionIcon
-              onClick={(e) => { e.preventDefault(); onDelete(); }}
+              onClick={(e) => {
+                e.preventDefault();
+                onDelete();
+              }}
               variant="light"
               color="red.8"
               radius="md"
@@ -116,7 +131,8 @@ const CategoryCard = ({ categoryObj, onEdit, onDelete }) => {
         </Group>
 
         <Text size="sm" c="dimmed" lh={1.5} lineClamp={3} h={65}>
-          {description || "No description provided for this category. Click explore to see all related products."}
+          {description ||
+            "No description provided for this category. Click explore to see all related products."}
         </Text>
       </Stack>
 

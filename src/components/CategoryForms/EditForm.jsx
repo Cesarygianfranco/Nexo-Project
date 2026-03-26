@@ -12,17 +12,7 @@ import {
 import classes from "./CreateForm.module.css";
 import axios from "axios";
 import { BASE_URL } from "../../../service/api";
-import laptop from "/images/laptop.jpg";
-import discoduro from "/images/discoduro.jpg";
-import memoriaram from "/images/memoriaram.jpg";
-import monitor from "/images/monitor.jpg";
-import mouse from "/images/mouse.jpg";
-import packspc from "/images/packspc.jpg";
-import pc from "/images/pc.jpg";
-import pendrives from "/images/pendrives.jpg";
-import procesador from "/images/procesador.jpg";
-import tarjetagrafica from "/images/tarjetagrafica.jpg";
-import teclado from "/images/teclado.jpg";
+import { CATEGORY_ICONS } from "../../constants/categoryIcons";
 
 export function EditForm({ opened, close, onEdit, categoryData }) {
 	const [formData, setFormData] = useState({
@@ -116,25 +106,7 @@ export function EditForm({ opened, close, onEdit, categoryData }) {
 					<Select
 						label="Icon"
 						placeholder="Selecciona un icono"
-						data={[
-							{ value: laptop, label: "Laptop" },
-							{ value: discoduro, label: "Disco Duro" },
-							{ value: memoriaram, label: "Memoria RAM" },
-							{ value: monitor, label: "Monitor" },
-							{ value: mouse, label: "Mouse" },
-							{ value: packspc, label: "Ordenadores" },
-							{ value: pc, label: "Torres" },
-							{ value: pendrives, label: "PenDrives" },
-							{ value: procesador, label: "Procesadores" },
-							{
-								value: tarjetagrafica,
-								label: "Tarjetas Graficas",
-							},
-							{
-								value: teclado,
-								label: "Teclado",
-							},
-						]}
+						data={ CATEGORY_ICONS }
 						size="md"
 						value={formData.icon}
 						onChange={(value) =>

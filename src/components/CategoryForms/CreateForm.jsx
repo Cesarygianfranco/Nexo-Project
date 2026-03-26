@@ -1,158 +1,129 @@
 import { useState } from "react";
 import {
-	Drawer,
-	TextInput,
-	Textarea,
-	Button,
-	Stack,
-	Text,
-	Title,
-	Select,
-	Group,
+  Drawer,
+  TextInput,
+  Textarea,
+  Button,
+  Stack,
+  Text,
+  Select,
+  Group,
 } from "@mantine/core";
 
 import classes from "./CreateForm.module.css";
 import axios from "axios";
 import { BASE_URL } from "../../../service/api";
 
-import laptop from "/images/laptop.jpg";
-import discoduro from "/images/discoduro.jpg";
-import memoriaram from "/images/memoriaram.jpg";
-import monitor from "/images/monitor.jpg";
-import mouse from "/images/mouse.jpg";
-import packspc from "/images/packspc.jpg";
-import pc from "/images/pc.jpg";
-import pendrives from "/images/pendrives.jpg";
-import procesador from "/images/procesador.jpg";
-import tarjetagrafica from "/images/tarjetagrafica.jpg";
-import teclado from "/images/teclado.jpg";
+import { CATEGORY_ICONS } from "../../constants/categoryIcons";
 
 export function CreateForm({ opened, close, onCreate }) {
-	// Estado único para el formulario
-	const [formData, setFormData] = useState({
-		name: "",
-		description: "",
-		icon: "IconBox",
-		lastActivity: new Date().toISOString().split("T")[0],
-	});
+  // Estado único para el formulario
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    icon: "/images/laptop.jpg",
+    lastActivity: new Date().toISOString().split("T")[0],
+  });
 
-	const [error, setError] = useState("");
+  const [error, setError] = useState("");
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-		// Validación manual
-		if (formData.name.length < 3) {
-			setError("Name is too short");
-			return;
-		}
+    // Validación manual
+    if (formData.name.length < 3) {
+      setError("Name is too short");
+      return;
+    }
 
-		console.log("Enviando datos controlados:", formData);
-		axios
-			.post(`${BASE_URL}/categories.json`, formData)
-			.then((response) => {
-				console.log(response);
-				onCreate();
-				setFormData({
-					name: "",
-					description: "",
-					icon: "IconBox",
-					lastActivity: new Date().toISOString().split("T")[0],
-				});
-			})
-			.catch((err) => {
-				("failed to created", console.log(err));
-			});
-	};
+    console.log("Enviando datos controlados:", formData);
+    axios
+      .post(`${BASE_URL}/categories.json`, formData)
+      .then((response) => {
+        console.log(response);
+        onCreate();
+        setFormData({
+          name: "",
+          description: "",
+          icon: "/images/laptop.jpg", // <--- Aquí también
+          lastActivity: new Date().toISOString().split("T")[0],
+        });
+      })
+      .catch((err) => {
+        ("failed to created", console.log(err));
+      });
+  };
 
-	return (
-		<Drawer
-			opened={opened}
-			onClose={close}
-			position="left"
-			size="md"
-			title={
-				<Text fw={700} size="xl" className={classes.drawerTitle}>
-					New Category
-				</Text>
-			}
-			padding="xl"
-			className={classes.drawer}
-			overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
-		>
-			<form onSubmit={handleSubmit}>
-				<Stack gap="lg">
-					<TextInput
-						label="Name"
-						placeholder="E.g: Laptops"
-						required
-						size="md"
-						value={formData.name}
-						error={error}
-						onChange={(event) => {
-							setFormData({ ...formData, name: event.currentTarget.value });
-							if (error) setError("");
-						}}
-					/>
+  return (
+    <Drawer
+      opened={opened}
+      onClose={close}
+      position="left"
+      size="md"
+      title={
+        <Text fw={700} size="xl" className={classes.drawerTitle}>
+          New Category
+        </Text>
+      }
+      padding="xl"
+      className={classes.drawer}
+      overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
+    >
+      <form onSubmit={handleSubmit}>
+        <Stack gap="lg">
+          <TextInput
+            label="Name"
+            placeholder="E.g: Laptops"
+            required
+            size="md"
+            value={formData.name}
+            error={error}
+            onChange={(event) => {
+              setFormData({ ...formData, name: event.currentTarget.value });
+              if (error) setError("");
+            }}
+          />
 
-					<Textarea
-						label="Description"
-						placeholder="Describe brevemente los productos"
-						minRows={3}
-						size="md"
-						value={formData.description}
-						onChange={(event) =>
-							setFormData({
-								...formData,
-								description: event.currentTarget.value,
-							})
-						}
-					/>
+          <Textarea
+            label="Description"
+            placeholder="Describe brevemente los productos"
+            minRows={3}
+            size="md"
+            value={formData.description}
+            onChange={(event) =>
+              setFormData({
+                ...formData,
+                description: event.currentTarget.value,
+              })
+            }
+          />
 
-					<Select
-						label="Icon"
-						placeholder="Selecciona un icono"
-						data={[
-							{ value: laptop, label: "Laptop" },
-							{ value: discoduro, label: "Disco Duro" },
-							{ value: memoriaram, label: "Memoria RAM" },
-							{ value: monitor, label: "Monitor" },
-							{ value: mouse, label: "Mouse" },
-							{ value: packspc, label: "Ordenadores" },
-							{ value: pc, label: "Torres" },
-							{ value: pendrives, label: "PenDrives" },
-							{ value: procesador, label: "Procesadores" },
-							{
-								value: tarjetagrafica,
-								label: "Tarjetas Graficas",
-							},
-							{
-								value: teclado,
-								label: "Teclado",
-							},
-						]}
-						size="md"
-						value={formData.icon}
-						onChange={(value) =>
-							setFormData({ ...formData, icon: value || "IconBox" })
-						}
-					/>
+          <Select
+            label="Icon"
+            placeholder="Selecciona un icono"
+            data={CATEGORY_ICONS}
+            size="md"
+            value={formData.icon}
+            onChange={(value) => {
+              setFormData({ ...formData, icon: value });
+            }}
+          />
 
-					<Group justify="flex-end" mt="xl">
-						<Button variant="subtle" color="gray" onClick={close} size="md">
-							Cancel
-						</Button>
-						<Button
-							onClick={close}
-							type="submit"
-							className={classes.submitBtn}
-							size="md"
-						>
-							Create category
-						</Button>
-					</Group>
-				</Stack>
-			</form>
-		</Drawer>
-	);
+          <Group justify="flex-end" mt="xl">
+            <Button variant="subtle" color="gray" onClick={close} size="md">
+              Cancel
+            </Button>
+            <Button
+              onClick={close}
+              type="submit"
+              className={classes.submitBtn}
+              size="md"
+            >
+              Create category
+            </Button>
+          </Group>
+        </Stack>
+      </form>
+    </Drawer>
+  );
 }
