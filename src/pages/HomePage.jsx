@@ -107,8 +107,8 @@ const HomePage = () => {
 
     return (
         <>
-            <Modal {...stack.register("delete-page")} title="Delete this page?">
-                Are you sure you want to delete this page? This action cannot be undone.
+            <Modal {...stack.register("delete-page")} title="Delete this category?">
+                Are you sure you want to delete this category? This action cannot be undone and will permanently delete all products related.
                 <Group mt="lg" justify="flex-end">
                     <Button onClick={stack.closeAll} variant="default">
                         Cancel

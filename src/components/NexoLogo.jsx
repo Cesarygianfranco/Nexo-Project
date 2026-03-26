@@ -15,7 +15,7 @@ const NexoLogo = () => (
         justifyContent: 'center',
         fontWeight: 900,
         fontSize: 22,
-        fontFamily: 'Greycliff CF, var(--mantine-font-family)', // Fuente típica de Mantine
+        fontFamily: 'Greycliff CF, var(--mantine-font-family)', 
       }}
     >
       N
