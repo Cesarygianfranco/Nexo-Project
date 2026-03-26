@@ -1,17 +1,29 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom"; // Añadido Link
 import { BASE_URL } from "../../service/api";
-import { Text, Flex, Loader, Title, Input, Pagination, Group } from "@mantine/core"; // Añadidos Pagination y Group
+import { 
+  Text, 
+  Flex, 
+  Loader, 
+  Title, 
+  Input, 
+  Pagination, 
+  Group, 
+  Stack, 
+  Divider, 
+  Badge, 
+  ActionIcon 
+} from "@mantine/core";
+import { IconArrowLeft } from "@tabler/icons-react"; // Necesitas instalar @tabler/icons-react
 import ProductCard from "../components/ProductCard";
-import "./ProductsList.css"
+import "./ProductsList.css";
 import axios from "axios";
 import ProductForm from "../components/ProductForms/ProductForm";
 
 const ProductsList = () => {
   const { categoryId } = useParams();
   const [products, setproducts] = useState([]);
-  
-  
+  const [categoryName, setCategoryName] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [activePage, setPage] = useState(1);
@@ -42,16 +54,22 @@ const ProductsList = () => {
           setproducts([]);
         }
       })
-      .catch((error) => {
-        console.error("Error al obtener productos:", error);
+      .catch((error) => console.error("Error al obtener productos:", error))
+      .finally(() => setIsLoading(false));
+  }
+
+  function getCategoryInfo() {
+    axios
+      .get(`${BASE_URL}/categories/${categoryId}.json`)
+      .then((res) => {
+        if (res.data) setCategoryName(res.data.name);
       })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .catch((err) => console.error("Error al obtener nombre de categoría", err));
   }
 
   useEffect(() => {
     getData();
+    getCategoryInfo();
   }, [categoryId]);
 
   const deleteProduct = (id) => {
@@ -82,8 +100,39 @@ const ProductsList = () => {
       <Flex 
         className="products-main-content" 
         direction="column" 
-        style={{ minHeight: 'calc(100vh - 350px)' }} 
+        style={{ minHeight: 'calc(100vh - 350px)' }}
+        px="md" 
       >
+        {/* --- TITULO DE LA CATEGORÍA --- */}
+        <Stack gap="xs" mb="xl" mt="md">
+          <Group justify="space-between" align="flex-end">
+            <Stack gap={0}>
+              <Group gap="xs" mb={4}>
+                <ActionIcon 
+                  component={Link} 
+                  to="/" 
+                  variant="subtle" 
+                  color="gray" 
+                  size="sm"
+                >
+                  <IconArrowLeft size={16} />
+                </ActionIcon>
+                <Text size="xs" c="dimmed" fw={700} tt="uppercase" lts={1}>
+                  Category stock
+                </Text>
+              </Group>
+              <Title order={1} fz={32} fw={900} c="blue.9">
+                {categoryName || "Cargando..."}
+              </Title>
+            </Stack>
+
+            <Badge variant="light" color="blue" size="lg" radius="sm">
+              Total stock {filteredArr.length} 
+            </Badge>
+          </Group>
+          <Divider variant="dotted" />
+        </Stack>
+
         <div className="searchbar-container-products">
           <Input
             variant="filled"
@@ -114,7 +163,6 @@ const ProductsList = () => {
 
         {!isLoading && products.length > 0 && (
           <>
-            
             <Flex
               mih={70}
               gap="xl"
@@ -133,7 +181,6 @@ const ProductsList = () => {
               ))}
             </Flex>
 
-            
             {totalPages > 1 && (
               <Group justify="center" py="xl" mt="xl">
                 <Pagination 
