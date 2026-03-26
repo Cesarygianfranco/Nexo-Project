@@ -27,7 +27,7 @@ const CategoryCard = ({ categoryObj, onEdit, onDelete }) => {
       style={{
         transition: "all 0.3s ease",
         backgroundColor: "var(--mantine-color-body)",
-        overflow: "visible", 
+        overflow: "visible",
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = "translateY(-8px)";
@@ -38,7 +38,9 @@ const CategoryCard = ({ categoryObj, onEdit, onDelete }) => {
         e.currentTarget.style.boxShadow = "var(--mantine-shadow-sm)";
       }}
     >
-    
+      <p>lorem ipsum {icon}</p>
+      <img src={icon} alt="" />
+
       <Box
         style={{
           position: "absolute",
@@ -64,7 +66,7 @@ const CategoryCard = ({ categoryObj, onEdit, onDelete }) => {
             minWidth: 90,
             overflow: "hidden",
             backgroundColor: "black",
-            border: "3px solid var(--mantine-color-body)", 
+            border: "3px solid var(--mantine-color-body)",
           }}
         >
           <Link to={`/products/${id}`}>
