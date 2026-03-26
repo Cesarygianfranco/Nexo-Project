@@ -5,7 +5,7 @@ const NexoLogo = () => (
     
     <Box
       style={{
-        backgroundColor: 'var(--mantine-color-white)',
+        backgroundColor: 'var(--logobg)',
         color: 'var(--mantine-color-blue-9)',
         borderRadius: 'var(--mantine-radius-sm)',
         width: 34,

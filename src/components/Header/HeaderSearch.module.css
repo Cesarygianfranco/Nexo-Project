@@ -8,8 +8,8 @@
   z-index: 100; 
   
  
-  background-color: var(--mantine-color-blue-9);
-  border-bottom: 1px solid var(--mantine-color-blue-9);
+  background-color: var(--headerbc);
+  border-bottom: 1px solid var(--headerborder);
   padding-left: var(--mantine-spacing-md);
   padding-right: var(--mantine-spacing-md);
   box-shadow: var(--mantine-shadow-sm);
@@ -58,11 +58,11 @@
     color: var(--mantine-color-blue-9) !important;
     padding: 16px; 
     font-size: var(--mantine-font-size-lg);
-    border-bottom: 1px solid var(--mantine-color-gray-1);
+    border-bottom: 1px solid var(--bordes);
   }
 
   .link:hover {
-    background-color: var(--mantine-color-blue-0);
+    background-color: var(--backgrounds);
     color: var(--mantine-color-blue-9);
   }
 }

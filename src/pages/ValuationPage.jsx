@@ -162,7 +162,7 @@ const ValuationPage = () => {
 							</Table>
 
 							<Group justify="flex-end" mt="md">
-								<Paper withBorder p="xs" bg="gray.0" radius="sm">
+								<Paper withBorder p="xs" bg="var(--backgrounds)" radius="sm">
 									<Group gap="xl">
 										<Text size="sm" fw={700}>
 											CATEGORY TOTAL:
@@ -182,7 +182,7 @@ const ValuationPage = () => {
 					shadow="md"
 					p="xl"
 					radius="md"
-					bg="blue.6"
+					bg="blue.8"
 					c="white"
 					mt="xl"
 					className="grand-total-banner"

@@ -1,11 +1,18 @@
 :root {
-	--mi-color-especial: var(--mantine-color-blue-9);
-
-	font-family: var(--mantine-font-family);
+	--bordes: var(--mantine-color-gray-4);
+	--backgrounds: var(--mantine-color-white-8);
+	--headerbc: var(--mantine-color-blue-9);
+	--headerborder: var(--mantine-color-blue-9);
+	--logobg: var(--mantine-color-white)
+	
 }
 
 [data-mantine-color-scheme="dark"] {
-	--mi-color-especial: var(--mantine-color-orange-5);
+	--bordes: var(--mantine-color-gray-8);
+	--backgrounds: var(--mantine-color-black-2);
+	--headerbc: var(--mantine-color-gray-9);
+	--headerborder: var(--mantine-color-gray-9);
+	--logobg: var(--mantine-color-gray-8)
 }
 
 .mi-contenedor-personalizado {

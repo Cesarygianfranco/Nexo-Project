@@ -1,7 +1,3 @@
-.drawer :global(.mantine-Drawer-content) {
-  background-color: var(--mantine-color-white);
-}
-
 .drawerTitle {
   color: var(--mantine-color-blue-9);
   font-weight: 800;

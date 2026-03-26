@@ -5,18 +5,17 @@
 
 .invoice-section:hover {
   border-left-width: 10px;
-  background-color: #fcfcfc;
+  background-color: var(--backgrounds);
 }
 
 .category-header {
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--bordes);
   padding-bottom: 10px;
 }
 
 .grand-total-banner {
-  border: 2px solid rgba(255, 255, 255, 0.4);
+  border: 2px solid var(--mantine-color-blue-8);
   /* Efecto para que destaque sobre el resto */
-  box-shadow: 0 10px 15px -3px rgba(34, 139, 230, 0.3);
 }
 
 @media (max-width: 768px) {
