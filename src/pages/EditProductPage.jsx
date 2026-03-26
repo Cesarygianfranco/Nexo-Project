@@ -57,10 +57,15 @@ const EditProductPage = () => {
     e.preventDefault();
     setUpdating(true);
 
+    // Creamos una copia limpia de los datos para enviar
+    const updatedProduct = {
+      ...formData,
+      amount: Number(formData.amount) || 0, 
+      value: Number(formData.value) || 0,   
+    };
+
     axios
-      .patch(`${BASE_URL}/products/${productId}.json`, {
-        ...formData,
-      })
+      .patch(`${BASE_URL}/products/${productId}.json`,updatedProduct)
       .then(() => {
         navigate(-1); // Volver atrás tras guardar
       })

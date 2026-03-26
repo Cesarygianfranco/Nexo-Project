@@ -1,14 +1,22 @@
-import { useState } from 'react';
-import { TextInput, NumberInput, Textarea, Button, Stack, Title, Paper } from '@mantine/core';
-import { IconPlus } from '@tabler/icons-react';
-import axios from 'axios';
-import { BASE_URL } from '../../../service/api';
-import './ProductForm.css';
+import { useState } from "react";
+import {
+  TextInput,
+  NumberInput,
+  Textarea,
+  Button,
+  Stack,
+  Title,
+  Paper,
+} from "@mantine/core";
+import { IconPlus } from "@tabler/icons-react";
+import axios from "axios";
+import { BASE_URL } from "../../../service/api";
+import "./ProductForm.css";
 
-const ProductForm = ( props ) => {
+const ProductForm = (props) => {
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
+    name: "",
+    description: "",
     amount: 0,
     value: 0,
   });
@@ -18,20 +26,23 @@ const ProductForm = ( props ) => {
 
     const newProduct = {
       ...formData,
+      // Forzamos la conversión aquí
+      amount: Number(formData.amount) || 0,
+      value: Number(formData.value) || 0,
       categoryId: props.categoryId,
       isDeleted: false,
     };
 
-    axios.post(`${BASE_URL}/products.json`, newProduct)
+    axios
+      .post(`${BASE_URL}/products.json`, newProduct)
       .then((response) => {
         console.log("Product created:", response.data);
         // Limpiar el formulario
-        setFormData({ name: '', description: '', amount: 0, value: 0 });
-        props.onCreated()
+        setFormData({ name: "", description: "", amount: 0, value: 0 });
+        props.onCreated();
       })
       .catch((error) => {
         console.error("Error creating product:", error);
-       
       });
   };
 
@@ -39,7 +50,9 @@ const ProductForm = ( props ) => {
     <Paper shadow="md" p="xl" withBorder className="product-form-container">
       <form onSubmit={handleSubmit}>
         <Stack gap="md">
-          <Title order={4} c="blue">Add New Product</Title>
+          <Title order={4} c="blue">
+            Add New Product
+          </Title>
 
           <TextInput
             label="Product Name"
@@ -54,7 +67,9 @@ const ProductForm = ( props ) => {
             placeholder="Technical specs..."
             minRows={2}
             value={formData.description}
-            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, description: e.target.value })
+            }
           />
 
           <NumberInput
@@ -78,9 +93,9 @@ const ProductForm = ( props ) => {
             onChange={(val) => setFormData({ ...formData, value: val })}
           />
 
-          <Button 
-            type="submit" 
-            leftSection={<IconPlus size={18} />} 
+          <Button
+            type="submit"
+            leftSection={<IconPlus size={18} />}
             fullWidth
             mt="md"
           >
