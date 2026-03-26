@@ -1,5 +1,4 @@
-import { IconSearch } from "@tabler/icons-react";
-import { Autocomplete, Burger, Group, Drawer, Stack } from "@mantine/core";
+import { Burger, Group, Drawer, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import NexoLogo from "../NexoLogo";
 import { Link } from "react-router-dom";
@@ -10,7 +9,6 @@ const links = [
   { link: "/", label: "Home" },
   { link: "/valuation", label: "Valuation" },
   { link: "/bin", label: "Bin" },
-  { link: "/community", label: "Community" },
 ];
 
 function HeaderSearch() {
@@ -35,7 +33,7 @@ function HeaderSearch() {
             opened={opened}
             onClick={toggle}
             size="sm"
-            hiddenFrom="md"
+            hiddenFrom="md" 
             color="white"
             aria-label="Toggle navigation"
             className={classes.burgerCustom}
@@ -43,29 +41,26 @@ function HeaderSearch() {
           <Link
             style={{
               textDecoration: "none",
-              transition: "transform 0.2s ease, box-shadow 0.2s ease",
+              transition: "transform 0.2s ease",
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-2px)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.transform = "translateY(-2px)")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.transform = "translateY(0)")
+            }
             to={"/"}
           >
             <NexoLogo />
           </Link>
         </Group>
-
-        <Group>
-          <Group ml={50} gap={5} className={classes.links} visibleFrom="sm">
+        <Group gap="md">
+          <Group gap={5} className={classes.links} visibleFrom="md">
             {items}
-            <ColorSchemeToggle />
           </Group>
+          <ColorSchemeToggle />
         </Group>
       </div>
-
-
 
       {/* Menú lateral para móviles */}
       <Drawer
@@ -73,8 +68,8 @@ function HeaderSearch() {
         onClose={close}
         size="md"
         padding="md"
-        title="Navegation"
-        hiddenFrom="sm"
+        title="Navigation"
+        hiddenFrom="md"
         zIndex={1000}
       >
         <Stack gap={10}>{items}</Stack>
