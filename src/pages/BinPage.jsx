@@ -104,14 +104,14 @@ function BinPage() {
           <Group justify="space-between" align="center">
             <Stack gap={0}>
               <Group gap="sm">
-                <IconRecycle size={32} color="var(--mantine-color-blue-6)" />
+                <IconRecycle size={32} color="var(--mantine-color-blue-9)" />
                 <Title order={1}>Trash Bin</Title>
               </Group>
               <Text c="dimmed">Manage and restore your deleted products</Text>
             </Stack>
 
             {!isLoading && productDeleted.length > 0 && (
-              <Badge size="lg" variant="light" color="blue">
+              <Badge size="lg" variant="light" color="var(--mantine-color-blue-9)">
                 {productDeleted.length} items archived
               </Badge>
             )}
@@ -181,7 +181,7 @@ function BinPage() {
                     <Group justify="space-between">
                       <IconPackage
                         size={32}
-                        color="var(--mantine-color-gray-4)"
+                        color="var(--mantine-color-gray-6)"
                         stroke={1.5}
                       />
                       <Badge color="gray" variant="light">
@@ -240,7 +240,7 @@ function BinPage() {
                   total={totalPages}
                   value={activePage}
                   onChange={setPage}
-                  color="blue"
+                  color="var(--mantine-color-blue-9)"
                   radius="md"
                   withEdges
                 />

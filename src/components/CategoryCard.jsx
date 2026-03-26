@@ -46,7 +46,7 @@ const CategoryCard = ({ categoryObj, onEdit, onDelete }) => {
 				{lastActivity && (
 					<Badge
 						variant="filled"
-						color="blue"
+						color="var(--mantine-color-blue-9)"
 						size="sm"
 						style={{
 							position: "absolute",
