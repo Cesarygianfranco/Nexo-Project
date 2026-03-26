@@ -26,7 +26,7 @@ function ProductCard({ product, deleteProduct }) {
         radius="md"
         withBorder
         miw={250}
-        maw={300}
+        maw={250}
         style={{
 				transition: "transform 0.2s ease, box-shadow 0.2s ease",
 			}}

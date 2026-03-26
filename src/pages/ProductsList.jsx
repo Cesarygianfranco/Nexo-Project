@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { BASE_URL } from "../../service/api";
-import { Text, Flex, Loader, Title, Input } from "@mantine/core";
+import { Text, Flex, Loader, Title, Input, Pagination, Group } from "@mantine/core"; // Añadidos Pagination y Group
 import ProductCard from "../components/ProductCard";
 import "./ProductsList.css"
 import axios from "axios";
@@ -10,8 +10,12 @@ import ProductForm from "../components/ProductForms/ProductForm";
 const ProductsList = () => {
   const { categoryId } = useParams();
   const [products, setproducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  
+  
   const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [activePage, setPage] = useState(1);
+  const itemsPerPage = 10;
 
   function getData() {
     setIsLoading(true);
@@ -19,22 +23,21 @@ const ProductsList = () => {
       .get(`${BASE_URL}/products.json`)
       .then((response) => {
         const infoObj = response.data;
-
         if (infoObj) {
           const arr = Object.keys(infoObj).map((id) => ({
             id,
             ...infoObj[id],
           }));
 
-          const filteredArr = arr.filter(
+          const filteredByCategory = arr.filter(
             (item) => item.categoryId === categoryId,
           );
 
-          const secondFilter = filteredArr.filter((element) => {
+          const activeProducts = filteredByCategory.filter((element) => {
             return element.isDeleted === false;
           });
 
-          setproducts(secondFilter);
+          setproducts(activeProducts);
         } else {
           setproducts([]);
         }
@@ -52,8 +55,7 @@ const ProductsList = () => {
   }, [categoryId]);
 
   const deleteProduct = (id) => {
-    const dataProduct = { isDeleted: true }; // Se envía solo el cambio
-
+    const dataProduct = { isDeleted: true };
     axios
       .patch(`${BASE_URL}/products/${id}.json`, dataProduct)
       .then(() => {
@@ -64,62 +66,90 @@ const ProductsList = () => {
       });
   };
 
+  // Lógica de filtrado y recorte por página
   const filteredArr = products.filter((element) => {
-		return element.name.toLowerCase().includes(inputValue.toLowerCase());
-	});
+    return element.name.toLowerCase().includes(inputValue.toLowerCase());
+  });
+
+  const totalPages = Math.ceil(filteredArr.length / itemsPerPage);
+  const startIndex = (activePage - 1) * itemsPerPage;
+  const currentProducts = filteredArr.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <>
-    {!isLoading && <ProductForm onCreated={getData} categoryId={categoryId} />}
+      {!isLoading && <ProductForm onCreated={getData} categoryId={categoryId} />}
 
-    {/* Contenedor Principal */}
-    <div className="products-main-content">
-      
-      <div className="searchbar-container-products">
-        <Input
-          variant="filled"
-          size="md"
-          radius="md"
-          placeholder="Search products..."
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          mb="xl" 
-        />
-      </div>
+      <Flex 
+        className="products-main-content" 
+        direction="column" 
+        style={{ minHeight: 'calc(100vh - 350px)' }} 
+      >
+        <div className="searchbar-container-products">
+          <Input
+            variant="filled"
+            size="md"
+            radius="md"
+            placeholder="Search products..."
+            value={inputValue}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+              setPage(1); 
+            }}
+            mb="xl" 
+          />
+        </div>
 
-      {isLoading && (
-        <Flex justify="center" mt="xl">
-          <Loader size="lg" />
-        </Flex>
-      )}
+        {isLoading && (
+          <Flex justify="center" mt="xl">
+            <Loader size="lg" />
+          </Flex>
+        )}
 
-      {!isLoading && products.length === 0 && (
-        <Flex direction="column" align="center" mt="50px">
-          <Title order={3}>No products found!</Title>
-          <Text c="dimmed">There are no products in this category yet.</Text>
-        </Flex>
-      )}
+        {!isLoading && products.length === 0 && (
+          <Flex direction="column" align="center" mt="50px">
+            <Title order={3}>No products found!</Title>
+            <Text c="dimmed">There are no products in this category yet.</Text>
+          </Flex>
+        )}
 
-      {!isLoading && products.length > 0 && (
-        <Flex
-          mih={70}
-          gap="xl"
-          justify="center"
-          align="flex-start"
-          direction="row"
-          wrap="wrap"
-        >
-          {filteredArr.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              deleteProduct={deleteProduct}
-            />
-          ))}
-        </Flex>
-      )}
-    </div>
-  </>
+        {!isLoading && products.length > 0 && (
+          <>
+            
+            <Flex
+              mih={70}
+              gap="xl"
+              justify="center"
+              align="flex-start"
+              direction="row"
+              wrap="wrap"
+              style={{ flex: 1 }} 
+            >
+              {currentProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  deleteProduct={deleteProduct}
+                />
+              ))}
+            </Flex>
+
+            
+            {totalPages > 1 && (
+              <Group justify="center" py="xl" mt="xl">
+                <Pagination 
+                  total={totalPages} 
+                  value={activePage} 
+                  onChange={setPage} 
+                  color="blue" 
+                  radius="md"
+                  withEdges
+                />
+              </Group>
+            )}
+          </>
+        )}
+      </Flex>
+    </>
   );
 };
 
