@@ -132,6 +132,7 @@ function BinPage() {
               radius="md"
               withBorder
               miw={280}
+              maw={280}
               className="bin-card-style"
 			  style={{
 				transition: "transform 0.2s ease, box-shadow 0.2s ease",
