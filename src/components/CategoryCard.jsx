@@ -38,8 +38,7 @@ const CategoryCard = ({ categoryObj, onEdit, onDelete }) => {
         e.currentTarget.style.boxShadow = "var(--mantine-shadow-sm)";
       }}
     >
-      <p>lorem ipsum {icon}</p>
-      <img src={icon} alt="" />
+
 
       <Box
         style={{

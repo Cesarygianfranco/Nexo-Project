@@ -15,17 +15,17 @@ import classes from "./CreateForm.module.css";
 import axios from "axios";
 import { BASE_URL } from "../../../service/api";
 
-import laptop from "../../assets/laptop.jpg";
-import discoduro from "../../assets/discoduro.jpg";
-import memoriaRam from "../../assets/memoriaRam.jpg";
-import monitor from "../../assets/monitor.jpg";
-import mouse from "../../assets/mouse.jpg";
-import packsPC from "../../assets/packsPC.jpg";
-import pc from "../../assets/pc.jpg";
-import penDrives from "../../assets/penDrives.jpg";
-import procesador from "../../assets/procesador.jpg";
-import tarjetaGrafica from "../../assets/tarjetaGrafica.jpg";
-import teclado from "../../assets/teclado.jpg";
+import laptop from "/images/laptop.jpg";
+import discoduro from "/images/discoduro.jpg";
+import memoriaram from "/images/memoriaram.jpg";
+import monitor from "/images/monitor.jpg";
+import mouse from "/images/mouse.jpg";
+import packspc from "/images/packspc.jpg";
+import pc from "/images/pc.jpg";
+import pendrives from "/images/pendrives.jpg";
+import procesador from "/images/procesador.jpg";
+import tarjetagrafica from "/images/tarjetagrafica.jpg";
+import teclado from "/images/teclado.jpg";
 
 export function CreateForm({ opened, close, onCreate }) {
 	// Estado único para el formulario
@@ -115,15 +115,15 @@ export function CreateForm({ opened, close, onCreate }) {
 						data={[
 							{ value: laptop, label: "Laptop" },
 							{ value: discoduro, label: "Disco Duro" },
-							{ value: memoriaRam, label: "Memoria RAM" },
+							{ value: memoriaram, label: "Memoria RAM" },
 							{ value: monitor, label: "Monitor" },
 							{ value: mouse, label: "Mouse" },
-							{ value: packsPC, label: "Ordenadores" },
+							{ value: packspc, label: "Ordenadores" },
 							{ value: pc, label: "Torres" },
-							{ value: penDrives, label: "PenDrives" },
+							{ value: pendrives, label: "PenDrives" },
 							{ value: procesador, label: "Procesadores" },
 							{
-								value: tarjetaGrafica,
+								value: tarjetagrafica,
 								label: "Tarjetas Graficas",
 							},
 							{
