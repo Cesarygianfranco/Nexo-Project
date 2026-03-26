@@ -196,7 +196,7 @@ const HomePage = () => {
                                 total={totalPages} 
                                 value={activePage} 
                                 onChange={setPage} 
-                                color="blue" 
+                                color="var(--mantine-color-blue-9)" 
                                 radius="md"
                                 withEdges
                             />

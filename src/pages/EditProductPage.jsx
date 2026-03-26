@@ -172,7 +172,7 @@ const EditProductPage = () => {
                       borderRadius: "12px",
                     }}
                   >
-                    <IconPackage size={48} color="#228be6" stroke={1.5} />
+                    <IconPackage size={48} color="var(--mantine-color-blue-9)" stroke={1.5} />
                   </div>
                   <Stack align="flex-end" gap={4}>
                     <Badge

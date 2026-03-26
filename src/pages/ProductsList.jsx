@@ -137,7 +137,7 @@ const ProductsList = () => {
               </Title>
             </Stack>
 
-            <Badge variant="light" color="blue" size="lg" radius="sm">
+            <Badge variant="light" color="var(--mantine-color-blue-6)" size="lg" radius="sm">
               Total stock {filteredArr.length} 
             </Badge>
           </Group>

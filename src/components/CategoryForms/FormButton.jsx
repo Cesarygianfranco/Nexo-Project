@@ -13,7 +13,7 @@ function FormButton(props) {
         <Button
           onClick={open}
           variant="subtle"
-          color="blue.9"
+          color="var(--mantine-color-blue-9)"
           leftSection={<IconPlus size={18} />} 
         >
           Add Category

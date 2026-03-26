@@ -83,12 +83,12 @@ const ValuationPage = () => {
 				<Group justify="space-between" align="flex-end">
 					<Stack gap={5}>
 						<Group gap="xs">
-							<IconReceipt2 size={32} color="#228be6" />
+							<IconReceipt2 size={32} color="var(--mantine-color-blue-6)" />
 							<Title order={1}>Inventory Valuation</Title>
 						</Group>
 						<Text c="dimmed">Financial report grouped by category</Text>
 					</Stack>
-					<Badge size="xl" variant="outline" color="blue">
+					<Badge size="xl" variant="outline" color="var(--mantine-color-blue-6)">
 						{new Date().toLocaleDateString()}
 					</Badge>
 				</Group>
