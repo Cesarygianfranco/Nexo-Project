@@ -15,19 +15,17 @@ import classes from "./CreateForm.module.css";
 import axios from "axios";
 import { BASE_URL } from "../../../service/api";
 
-import {
-	laptop,
-	discoduro,
-	memoriaRam,
-	monitor,
-	mouse,
-	packsPC,
-	pc,
-	penDrives,
-	procesador,
-	tarjetaGrafica,
-	teclado,
-} from "../../assets";
+import laptop from "../../assets/laptop.jpg";
+import discoduro from "../../assets/discoduro.jpg";
+import memoriaRam from "../../assets/memoriaRam.jpg";
+import monitor from "../../assets/monitor.jpg";
+import mouse from "../../assets/mouse.jpg";
+import packsPC from "../../assets/packsPC.jpg";
+import pc from "../../assets/pc.jpg";
+import penDrives from "../../assets/penDrives.jpg";
+import procesador from "../../assets/procesador.jpg";
+import tarjetaGrafica from "../../assets/tarjetaGrafica.jpg";
+import teclado from "../../assets/teclado.jpg";
 
 export function CreateForm({ opened, close, onCreate }) {
 	// Estado único para el formulario
