@@ -27,7 +27,7 @@ const CategoryCard = ({ categoryObj, onEdit, onDelete }) => {
       radius="xl"
       withBorder
       padding="xl"
-      maw={350}
+      maw={320}
       miw={320}
       style={{
         transition: "all 0.3s ease",
