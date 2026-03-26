@@ -29,6 +29,15 @@ const ProductsList = () => {
   const [activePage, setPage] = useState(1);
   const itemsPerPage = 10;
 
+  // Lógica de filtrado y recorte por página
+  const filteredArr = products.filter((element) => {
+    return element.name.toLowerCase().includes(inputValue.toLowerCase());
+  });
+
+  const totalPages = Math.ceil(filteredArr.length / itemsPerPage);
+  const startIndex = (activePage - 1) * itemsPerPage;
+  const currentProducts = filteredArr.slice(startIndex, startIndex + itemsPerPage);
+
   function getData() {
     setIsLoading(true);
     axios
@@ -68,6 +77,15 @@ const ProductsList = () => {
   }
 
   useEffect(() => {
+        if (activePage > totalPages && totalPages > 0) {
+          setPage(totalPages);
+        } else if (totalPages === 0) {
+        
+          setPage(1);
+        }
+      }, [filteredArr.length, totalPages, activePage]); 
+
+  useEffect(() => {
     getData();
     getCategoryInfo();
   }, [categoryId]);
@@ -84,14 +102,7 @@ const ProductsList = () => {
       });
   };
 
-  // Lógica de filtrado y recorte por página
-  const filteredArr = products.filter((element) => {
-    return element.name.toLowerCase().includes(inputValue.toLowerCase());
-  });
-
-  const totalPages = Math.ceil(filteredArr.length / itemsPerPage);
-  const startIndex = (activePage - 1) * itemsPerPage;
-  const currentProducts = filteredArr.slice(startIndex, startIndex + itemsPerPage);
+  
 
   return (
     <>

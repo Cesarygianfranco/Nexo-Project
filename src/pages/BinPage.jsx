@@ -36,6 +36,15 @@ function BinPage() {
   const [activePage, setPage] = useState(1);
   const itemsPerPage = 8;
 
+  // --- LÓGICA DE FILTRADO Y PAGINACIÓN ---
+  const filteredArr = productDeleted.filter((el) =>
+    el.name.toLowerCase().includes(inputValue.toLowerCase()),
+  );
+
+  const totalPages = Math.ceil(filteredArr.length / itemsPerPage);
+  const startIndex = (activePage - 1) * itemsPerPage;
+  const currentItems = filteredArr.slice(startIndex, startIndex + itemsPerPage);
+
   const getDataFromDB = () => {
     setIsLoading(true);
     axios
@@ -58,6 +67,16 @@ function BinPage() {
   };
 
   useEffect(() => {
+  if (activePage > totalPages && totalPages > 0) {
+    setPage(totalPages);
+  } else if (totalPages === 0) {
+  
+    setPage(1);
+  }
+}, [filteredArr.length, totalPages, activePage]); 
+
+
+  useEffect(() => {
     getDataFromDB();
   }, []);
 
@@ -71,14 +90,7 @@ function BinPage() {
     axios.delete(`${BASE_URL}/products/${id}.json`).then(() => getDataFromDB());
   };
 
-  // --- LÓGICA DE FILTRADO Y PAGINACIÓN ---
-  const filteredArr = productDeleted.filter((el) =>
-    el.name.toLowerCase().includes(inputValue.toLowerCase()),
-  );
-
-  const totalPages = Math.ceil(filteredArr.length / itemsPerPage);
-  const startIndex = (activePage - 1) * itemsPerPage;
-  const currentItems = filteredArr.slice(startIndex, startIndex + itemsPerPage);
+  
 
   return (
     <Container size="xl" py="xl">
