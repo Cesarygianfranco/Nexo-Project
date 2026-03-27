@@ -33,7 +33,6 @@ function HeaderSearch() {
             opened={opened}
             onClick={toggle}
             size="sm"
-            hiddenFrom="md" 
             color="white"
             aria-label="Toggle navigation"
             className={classes.burgerCustom}
@@ -55,7 +54,7 @@ function HeaderSearch() {
           </Link>
         </Group>
         <Group gap="md">
-          <Group gap={5} className={classes.links} visibleFrom="md">
+          <Group gap={5} className={classes.links} visibleFrom="sm">
             {items}
           </Group>
           <ColorSchemeToggle />
